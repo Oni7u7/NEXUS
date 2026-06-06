@@ -30,6 +30,64 @@
 
 ---
 
+## Vista Previa
+
+### Landing Page
+
+<div align="center">
+  <img src="public/screenshots/260606_02h31m45s_screenshot.png" alt="NEXUS Landing Page" width="100%" />
+</div>
+
+---
+
+### Chat con el Agente NEXUS
+
+> El creador habla en español. El agente coordina todo el proceso de despliegue y cobro.
+
+<div align="center">
+  <img src="public/screenshots/260606_02h33m11s_screenshot.png" alt="Chat - Onboarding del creador" width="49%" />
+  <img src="public/screenshots/260606_02h33m35s_screenshot.png" alt="Chat - Deploy de coleccion en progreso" width="49%" />
+</div>
+
+<div align="center">
+  <img src="public/screenshots/260606_02h33m51s_screenshot.png" alt="Chat - Pago SPEI al creador" width="80%" />
+</div>
+
+---
+
+### Dashboard del Creador
+
+> Visualiza tus colecciones, NFTs acunados y el estado del mercado en tiempo real.
+
+<div align="center">
+  <img src="public/screenshots/260606_02h34m29s_screenshot.png" alt="Dashboard - Mis colecciones" width="49%" />
+  <img src="public/screenshots/260606_02h34m44s_screenshot.png" alt="Dashboard - Mercado global Rare Protocol" width="49%" />
+</div>
+
+---
+
+### Flujo de Puja
+
+> Los compradores globales pujan en ETH. El creador recibe pesos mexicanos via SPEI.
+
+<div align="center">
+  <img src="public/screenshots/260606_02h35m30s_screenshot.png" alt="Puja - Modal de oferta" width="32%" />
+  <img src="public/screenshots/260606_02h35m53s_screenshot.png" alt="Puja - Confirmacion de wallet" width="32%" />
+  <img src="public/screenshots/260606_02h36m12s_screenshot.png" alt="Puja - Oferta enviada" width="32%" />
+</div>
+
+---
+
+### Admin Panel
+
+> Historial completo de transacciones onchain registradas en NexusRegistry (Sepolia).
+
+<div align="center">
+  <img src="public/screenshots/260606_02h36m40s_screenshot.png" alt="Admin Panel - Historial de transacciones" width="100%" />
+</div>
+
+---
+
 ## El Problema
 
 Los creadores digitales en Mexico y LATAM enfrentan una barrera enorme para monetizar su trabajo globalmente:
