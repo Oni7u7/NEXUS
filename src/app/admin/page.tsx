@@ -353,9 +353,9 @@ export default function AdminPage() {
                     <YAxis tick={{ fill: '#71717a', fontSize: 11 }} axisLine={false} tickLine={false} />
                     <Tooltip
                       contentStyle={tooltipStyle}
-                      formatter={(v: number, name: string) => [
-                        name === 'eth' ? `${v} ETH` : `$${v.toLocaleString('es-MX')} MXN`,
-                        name.toUpperCase(),
+                      formatter={(v, name) => [
+                        name === 'eth' ? `${Number(v)} ETH` : `$${Number(v).toLocaleString('es-MX')} MXN`,
+                        String(name).toUpperCase(),
                       ]}
                     />
                     <Legend wrapperStyle={{ fontSize: 11, color: '#a1a1aa' }} />
@@ -381,7 +381,7 @@ export default function AdminPage() {
                     <Tooltip
                       contentStyle={tooltipStyle}
                       cursor={{ strokeDasharray: '3 3', stroke: '#52525b' }}
-                      formatter={(v: number, name: string) => [`$${v.toLocaleString('es-MX')}`, name]}
+                      formatter={(v, name) => [`$${Number(v).toLocaleString('es-MX')}`, String(name)]}
                     />
                     <Scatter name="Ventas" data={scatterData} fill="#a855f7" opacity={0.8} />
                   </ScatterChart>
