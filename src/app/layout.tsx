@@ -37,3 +37,4 @@ export default function RootLayout({
     </html>
   );
 }
+/*adelante cambio de colores*/
