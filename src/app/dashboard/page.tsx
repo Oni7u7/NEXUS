@@ -145,7 +145,7 @@ function BidModal({
     >
       <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 w-full max-w-sm space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-white font-bold text-base">Hacer puja</h3>
+          <h3 className="text-white font-bold text-base">Hacer puja en eth</h3>
           <button onClick={onClose} className="text-zinc-500 hover:text-white text-xl leading-none">×</button>
         </div>
 

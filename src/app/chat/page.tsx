@@ -160,8 +160,9 @@ function CollectionStatus({
             <div className="col-span-2">
               <span className="text-zinc-500 text-xs">Precio ETH ahora</span>
               <p className="text-zinc-300 mt-0.5">
-                ${ethPriceMXN.toLocaleString('es-MX')} MXN
+                ${ethPriceMXN.toLocaleString('es-MX')} MXN (se Actualiza cada 30 segundos)
               </p>
+              
             </div>
           )}
         </div>
