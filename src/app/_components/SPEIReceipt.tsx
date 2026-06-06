@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 export interface SPEIReceiptData {
   collectionName: string | null
@@ -97,6 +98,25 @@ function printReceipt(data: SPEIReceiptData) {
   }
 }
 
+// ── Status label helper ────────────────────────────────────────────────────────
+
+function WithdrawalStatusLabel({ status }: { status?: string }) {
+  if (!status) return null
+  const map: Record<string, { label: string; className: string }> = {
+    pending:    { label: '⏳ Procesando transferencia...', className: 'bg-yellow-900/60 text-yellow-300 border-yellow-700' },
+    processing: { label: '🔄 En camino a tu cuenta...', className: 'bg-blue-900/60 text-blue-300 border-blue-700' },
+    complete:   { label: '✅ ¡Dinero recibido en tu cuenta!', className: 'bg-green-900/60 text-green-400 border-green-700' },
+    failed:     { label: '❌ Error en la transferencia — contacta soporte', className: 'bg-red-900/60 text-red-400 border-red-700' },
+  }
+  const entry = map[status]
+  if (!entry) return null
+  return (
+    <span className={`text-xs border rounded-full px-2 py-0.5 font-medium ${entry.className}`}>
+      {entry.label}
+    </span>
+  )
+}
+
 // ── Componente inline (para chat y dashboard) ─────────────────────────────────
 
 export default function SPEIReceipt({
@@ -106,6 +126,23 @@ export default function SPEIReceipt({
   data: SPEIReceiptData
   collapsible?: boolean
 }) {
+  const isReal = !!data.speiId &&
+    !data.speiId.includes('DEMO') &&
+    !data.speiId.includes('STAGE') &&
+    !data.speiId.includes('MOCK')
+
+  const { data: withdrawalStatus } = useQuery({
+    queryKey: ['withdrawal', data.speiId],
+    queryFn: () =>
+      fetch(`/api/bitso?action=withdrawal_status&wid=${data.speiId}`).then((r) => r.json()),
+    refetchInterval: isReal ? 5000 : false,
+    enabled: isReal,
+  })
+
+  const liveStatus = isReal
+    ? (withdrawalStatus?.status ?? data.speiStatus)
+    : (data.speiStatus ?? 'simulated')
+
   const concepto = data.collectionName
     ? `Venta NFT — ${data.collectionName}${data.tokenId != null ? ` #${data.tokenId}` : ''}`
     : `Venta NFT${data.tokenId != null ? ` #${data.tokenId}` : ''}`
@@ -124,10 +161,12 @@ export default function SPEIReceipt({
           </span>
           <span className="ml-2 text-zinc-500 text-xs">Comprobante SPEI</span>
         </div>
-        {data.speiStatus === 'simulated' ? (
+        {liveStatus === 'simulated' ? (
           <span className="text-xs bg-blue-900/60 text-blue-300 border border-blue-700 rounded-full px-2 py-0.5 font-medium">
             🔵 Demo — En producción llegaría vía SPEI real
           </span>
+        ) : isReal ? (
+          <WithdrawalStatusLabel status={liveStatus} />
         ) : (
           <span className="text-xs bg-green-900/60 text-green-400 border border-green-700 rounded-full px-2 py-0.5 font-medium">
             ✅ En proceso
