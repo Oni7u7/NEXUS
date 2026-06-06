@@ -73,6 +73,14 @@ export async function runAgent(input: AgentInput): Promise<AgentOutput> {
         const sessionContext = {
           ...input.context,
           creatorWallet: input.context?.creatorWallet ?? null,
+          creatorClabe: input.context?.creatorClabe ?? null,  // 18 dígitos completos
+        }
+
+        // Extrae CLABE del mensaje actual o del historial si el usuario la escribió
+        const clabeMatch = (input.message + JSON.stringify(input.history ?? [])).match(/\b(\d{18})\b/)
+        if (clabeMatch) {
+          sessionContext.creatorClabe = clabeMatch[1]
+          console.log('[NEXUS:agent] CLABE extraída:', clabeMatch[1])
         }
         const result = await executeTool(block.name, inp, sessionContext)
 
@@ -118,10 +126,15 @@ export async function runAgent(input: AgentInput): Promise<AgentOutput> {
             metadata.lastSaleSpeiId = r.speiId ?? null
             metadata.lastSaleSpeiStatus = r.speiStatus ?? null
             metadata.lastSaleTokenId = inp.tokenId
-            // Mascara la CLABE — solo guarda los últimos 4 dígitos
             const rawClabe = inp.creatorClabe as string | undefined
-            metadata.lastSaleClabe = rawClabe
-              ? `••••••••••••••${rawClabe.slice(-4)}`
+            // Si Claude pasó una versión parcial/enmascarada, usar la CLABE completa del context
+            const contextClabe = sessionContext.creatorClabe as string | null
+            const resolvedClabe = rawClabe?.length === 18 ? rawClabe : (contextClabe ?? rawClabe)
+            // Guarda la CLABE completa en creatorClabe para persistir en sessionState
+            if (resolvedClabe?.length === 18) metadata.creatorClabe = resolvedClabe
+            // Solo para display en UI se enmascara
+            metadata.lastSaleClabe = resolvedClabe
+              ? `••••••••••••••${resolvedClabe.slice(-4)}`
               : null
             metadata.lastSaleCollectionName = metadata.collectionName ?? null
             metadata.settledTokenId = inp.tokenId

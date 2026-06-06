@@ -87,6 +87,13 @@ REGLA CRÍTICA DE TOOLS:
 - Si no tienes la contract address, omite el parámetro y el sistema la
   obtendrá automáticamente del sessionState.
 
+REGLA CRÍTICA — CLABE:
+- Cuando el usuario proporcione su CLABE, SIEMPRE pásala COMPLETA (18 dígitos)
+  al parámetro creatorClabe de record_sale.
+- NUNCA la truncues, abrevies ni enmascaras antes de pasarla al tool.
+- La CLABE debe ir exactamente como el usuario la escribió, sin espacios ni guiones.
+- Si el usuario escribió "646180272800000004", pasa exactamente "646180272800000004".
+
 TOOLS DISPONIBLES (úsalas cuando sea necesario, sin explicar los detalles técnicos al usuario):
 - get_ticker: para precios ETH/MXN en tiempo real
 - deploy_collection: para crear la colección del creador

@@ -240,11 +240,12 @@ export async function executeTool(
 
     case 'mint_nft':
       return rare.mintNFT({
-        contract: input.contract as string,
+        contract: (input.contract as string | undefined) ?? context?.collectionAddress as string,
         name: input.name as string,
         description: input.description as string,
-        ipfsImageUri: input.ipfsImageUri as string,
+        ipfsImageUri: (input.ipfsImageUri as string | undefined) ?? context?.lastUploadedIpfsUri as string,
         attributes: input.attributes as Array<{ trait_type: string; value: string }> | undefined,
+        creatorWallet: (context?.creatorWallet as string | undefined) ?? null,
       })
 
     // Mercado
@@ -358,7 +359,10 @@ export async function executeTool(
       const creatorAddress = isValidAddress
         ? (rawAddress as string)
         : (process.env.AGENT_ADDRESS as string)
-      const creatorClabe = input.creatorClabe as string | undefined
+      // Usa el input del LLM si tiene 18 dígitos; si no, usa el context completo como fallback
+      const inputClabe = input.creatorClabe as string | undefined
+      const contextClabe = context?.creatorClabe as string | undefined
+      const creatorClabe = inputClabe?.length === 18 ? inputClabe : (contextClabe ?? inputClabe)
 
       // a) Precio ETH/MXN actual
       let ethPriceMXN = 47000  // fallback razonable
