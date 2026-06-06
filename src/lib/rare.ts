@@ -122,6 +122,7 @@ export const rare = {
     ipfsImageUri: string
     metadataUri?: string    // si ya está subido el metadata, usar directamente
     attributes?: Array<{ trait_type: string; value: string }>
+    creatorWallet?: string | null  // wallet del creador para royalties
   }): Promise<{ success: true; tokenId: number; txHash: string; ipfsUri: string } | { success: false; error: string }> {
     const { client, mock } = getClient()
 
@@ -151,6 +152,10 @@ export const rare = {
       const result = await client.collection.mint({
         contract: params.contract as `0x${string}`,
         tokenUri: uploadedMetadata.ipfsUri,
+        ...(params.creatorWallet ? {
+          royaltyReceiver: params.creatorWallet as `0x${string}`,
+          royaltyPercentage: 10,
+        } : {}),
       })
       console.log('[NEXUS:rare] mintNFT success tokenId:', result.tokenId.toString())
       return {
