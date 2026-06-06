@@ -14,8 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nexus",
-  description: "Built at ETH Mexico 2026",
+  title: "NEXUS — Arte Digital para LATAM",
+  description: "Vende tu arte al mundo, cobra en pesos mexicanos",
+  icons: { icon: '/logo-nexus.png' },
 };
 
 export default function RootLayout({
