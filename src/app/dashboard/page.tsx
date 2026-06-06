@@ -212,7 +212,7 @@ function BidModal({
         <button
           onClick={handleBid}
           disabled={isPending || !bidAmount || bidEth <= 0 || !hasBalance || isSuccess}
-          className="w-full py-2.5 rounded-xl bg-calypso-600 hover:bg-calypso-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-sm transition-colors"
+          className="w-full py-2.5 rounded-xl bg-accent-500 hover:bg-accent-400 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-sm transition-colors"
         >
           {isPending ? 'Firmando...' : 'Confirmar puja con mi wallet'}
         </button>
@@ -373,7 +373,7 @@ function MarketCard({
           <div className="flex gap-2 mt-2">
             <button
               onClick={() => setShowBidModal(true)}
-              className="flex-1 text-center text-xs text-white bg-calypso-600 hover:bg-calypso-500 rounded-lg py-1.5 font-medium transition-colors"
+              className="flex-1 text-center text-xs text-white bg-accent-500 hover:bg-accent-400 rounded-lg py-1.5 font-medium transition-colors"
             >
               Pujar →
             </button>
@@ -624,7 +624,7 @@ export default function DashboardPage() {
               </p>
               <Link
                 href="/chat"
-                className="mt-1 px-6 py-2.5 bg-calypso-600 hover:bg-calypso-500 text-white rounded-xl text-sm font-medium transition-colors"
+                className="mt-1 px-6 py-2.5 bg-accent-500 hover:bg-accent-400 text-white rounded-xl text-sm font-medium transition-colors"
               >
                 Crea tu primera colección →
               </Link>

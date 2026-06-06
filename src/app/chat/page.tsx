@@ -746,7 +746,7 @@ export default function ChatPage() {
           <button
             onClick={sendMessage}
             disabled={!input.trim() || isLoading}
-            className="p-2.5 rounded-xl bg-calypso-600 hover:bg-calypso-500 disabled:opacity-40 disabled:cursor-not-allowed text-white transition-colors shrink-0"
+            className="p-2.5 rounded-xl bg-accent-500 hover:bg-accent-400 disabled:opacity-40 disabled:cursor-not-allowed text-white transition-colors shrink-0"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7 7 7-7 7" />

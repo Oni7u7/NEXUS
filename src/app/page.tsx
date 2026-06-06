@@ -310,7 +310,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link
                 href="/chat"
-                className="px-7 py-3.5 rounded-full bg-calypso-600 hover:bg-calypso-500 hover:shadow-xl hover:shadow-calypso-500/30 text-white font-semibold transition-all duration-200 text-base"
+                className="px-7 py-3.5 rounded-full bg-accent-500 hover:bg-accent-400 hover:shadow-xl hover:shadow-accent-500/30 text-white font-semibold transition-all duration-200 text-base"
               >
                 Hablar con NEXUS →
               </Link>
