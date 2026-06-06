@@ -8,11 +8,11 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950">
+    <footer className="border-t border-calypso-800 bg-calypso-950">
       <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
         <div>
           <p className="text-lg font-bold text-white">NEXUS</p>
-          <p className="text-sm text-zinc-500 mt-1">Built at ETH Mexico 2025</p>
+          <p className="text-sm text-calypso-400 mt-1">Built at ETH Mexico 2025</p>
         </div>
 
         <nav aria-label="Footer navigation">
@@ -21,7 +21,7 @@ export default function Footer() {
               <li key={href}>
                 <Link
                   href={href}
-                  className="text-sm text-zinc-500 hover:text-white transition-colors"
+                  className="text-sm text-calypso-400 hover:text-white transition-colors"
                 >
                   {label}
                 </Link>
@@ -30,7 +30,7 @@ export default function Footer() {
           </ul>
         </nav>
 
-        <p className="text-sm text-zinc-600">
+        <p className="text-sm text-calypso-600">
           &copy; {new Date().getFullYear()} Nexus. All rights reserved.
         </p>
       </div>

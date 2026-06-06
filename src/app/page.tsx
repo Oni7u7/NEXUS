@@ -260,23 +260,23 @@ function StatCard({
 }) {
   const { ref, display, animating } = useCountUp(value)
   return (
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 flex flex-col gap-3 hover:border-violet-500/40 transition-all duration-300 group">
+    <div className="rounded-2xl border border-calypso-800 bg-calypso-900/60 p-6 flex flex-col gap-3 hover:border-calypso-500/40 transition-all duration-300 group">
       <div className="flex items-start justify-between">
-        <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 group-hover:bg-violet-500/20 transition-colors">
+        <div className="w-10 h-10 rounded-xl bg-calypso-500/10 border border-calypso-500/20 flex items-center justify-center text-calypso-300 group-hover:bg-calypso-500/20 transition-colors">
           {icon}
         </div>
-        <span className="text-xs text-zinc-600 text-right max-w-[130px] leading-snug">{source}</span>
+        <span className="text-xs text-calypso-600 text-right max-w-[130px] leading-snug">{source}</span>
       </div>
       <span
         ref={ref}
         className={`text-3xl md:text-4xl font-bold tabular-nums transition-all duration-300 ${
-          animating ? 'text-violet-300' : 'text-white'
+          animating ? 'text-calypso-200' : 'text-white'
         }`}
       >
         {display}
       </span>
-      <p className="text-sm font-medium text-zinc-300">{label}</p>
-      <p className="text-xs text-zinc-500">{subtext}</p>
+      <p className="text-sm font-medium text-calypso-200">{label}</p>
+      <p className="text-xs text-calypso-400">{subtext}</p>
     </div>
   )
 }
@@ -287,12 +287,12 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="bg-zinc-950 text-white">
+      <main className="bg-calypso-950 text-white">
 
         {/* ── SECTION 1: HERO ─────────────────────────────────────────────── */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-violet-600/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-calypso-600/10 rounded-full blur-3xl" />
           </div>
 
           <div className="relative mx-auto max-w-5xl px-6 pt-24 pb-20 flex flex-col items-center text-center gap-8">
@@ -301,7 +301,7 @@ export default function Home() {
               El arte de LATAM merece estar en el mundo
             </h2>
 
-            <p className="text-lg text-zinc-400 leading-relaxed max-w-xl">
+            <p className="text-lg text-calypso-300 leading-relaxed max-w-xl">
               Unete a los primeros creadores que estan monetizando su arte digitalmente con IA y
               blockchain — en espanol, en pesos.
             </p>
@@ -310,19 +310,19 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <Link
                 href="/chat"
-                className="px-7 py-3.5 rounded-full bg-violet-600 hover:bg-violet-500 hover:shadow-xl hover:shadow-violet-500/30 text-white font-semibold transition-all duration-200 text-base"
+                className="px-7 py-3.5 rounded-full bg-calypso-600 hover:bg-calypso-500 hover:shadow-xl hover:shadow-calypso-500/30 text-white font-semibold transition-all duration-200 text-base"
               >
                 Hablar con NEXUS →
               </Link>
               <Link
                 href="/dashboard"
-                className="px-7 py-3.5 rounded-full border border-zinc-700 hover:border-violet-500/50 hover:text-violet-300 text-zinc-300 font-medium transition-all duration-200 text-base"
+                className="px-7 py-3.5 rounded-full border border-calypso-700 hover:border-calypso-500/50 hover:text-calypso-200 text-calypso-300 font-medium transition-all duration-200 text-base"
               >
                 Ver el mercado ↗
               </Link>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-sm text-zinc-500 mt-2">
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-sm text-calypso-400 mt-2">
               {[
                 'Sin comisiones ocultas',
                 'Sin conocimientos tecnicos',
@@ -338,7 +338,7 @@ export default function Home() {
         </section>
 
         {/* ── SECTION 2: STATS ────────────────────────────────────────────── */}
-        <section className="py-20 px-6 border-t border-zinc-800/50">
+        <section className="py-20 px-6 border-t border-calypso-800/50">
           <div className="mx-auto max-w-6xl">
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               <StatCard
@@ -374,12 +374,12 @@ export default function Home() {
         </section>
 
         {/* ── SECTION 3: EL PROBLEMA ──────────────────────────────────────── */}
-        <section className="py-20 px-6 border-t border-zinc-800/50">
+        <section className="py-20 px-6 border-t border-calypso-800/50">
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">
                 El talento esta en LATAM. El mercado, en el mundo.{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-calypso-300 to-calypso-400">
                   NEXUS los conecta.
                 </span>
               </h2>
@@ -397,7 +397,7 @@ export default function Home() {
                     'El pago llega en crypto, no en pesos',
                     'Proceso manual de 6+ plataformas distintas',
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-zinc-400 text-sm">
+                    <li key={item} className="flex items-start gap-3 text-calypso-300 text-sm">
                       <IconX className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
                       {item}
                     </li>
@@ -416,7 +416,7 @@ export default function Home() {
                     'Recibes pesos mexicanos via SPEI',
                     'Un solo chat hace todo automaticamente',
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-zinc-300 text-sm">
+                    <li key={item} className="flex items-start gap-3 text-calypso-200 text-sm">
                       <IconCheck className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                       {item}
                     </li>
@@ -425,14 +425,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-violet-500/20 bg-violet-500/5 p-6 text-center">
-              <p className="text-base md:text-lg text-zinc-300 leading-relaxed">
+            <div className="mt-8 rounded-2xl border border-calypso-500/20 bg-calypso-500/5 p-6 text-center">
+              <p className="text-base md:text-lg text-calypso-200 leading-relaxed">
                 Si el 1% de los creadores digitales de Mexico usara NEXUS,{' '}
-                <span className="text-violet-300 font-semibold">
+                <span className="text-calypso-300 font-semibold">
                   generariamos $2.4M USD en volumen mensual
                 </span>
               </p>
-              <p className="text-xs text-zinc-600 mt-2">
+              <p className="text-xs text-calypso-600 mt-2">
                 443,000 creadores en Mexico x ingreso promedio $1,100 USD/mes (Stripe, 2023)
               </p>
             </div>
@@ -440,30 +440,30 @@ export default function Home() {
             <div className="mt-4 rounded-2xl border border-amber-900/30 bg-amber-950/10 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="shrink-0 text-2xl">💸</div>
               <div className="flex-1">
-                <p className="text-sm text-zinc-300 leading-relaxed">
+                <p className="text-sm text-calypso-200 leading-relaxed">
                   Los mexicanos pagan{' '}
                   <span className="text-amber-400 font-semibold">5-8%</span>{' '}
                   para recibir dinero del extranjero via Western Union. Con NEXUS los creadores pagan{' '}
                   <span className="text-green-400 font-semibold">menos del 1%</span>.
                 </p>
-                <p className="text-xs text-zinc-600 mt-1">Fuente: Profeco + Banco de Mexico 2024</p>
+                <p className="text-xs text-calypso-600 mt-1">Fuente: Profeco + Banco de Mexico 2024</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* ── SECTION 4: COMO FUNCIONA ────────────────────────────────────── */}
-        <section className="py-20 px-6 border-t border-zinc-800/50">
+        <section className="py-20 px-6 border-t border-calypso-800/50">
           <div className="mx-auto max-w-3xl">
             <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold text-white">
                 De &ldquo;quiero vender mi arte&rdquo; a pesos en tu cuenta.{' '}
-                <span className="text-violet-400">En minutos.</span>
+                <span className="text-calypso-300">En minutos.</span>
               </h2>
             </div>
 
             <div className="relative flex flex-col gap-0">
-              <div className="absolute left-6 top-6 bottom-6 w-px bg-gradient-to-b from-violet-500/60 via-violet-500/20 to-transparent hidden sm:block" />
+              <div className="absolute left-6 top-6 bottom-6 w-px bg-gradient-to-b from-calypso-500/60 via-calypso-500/20 to-transparent hidden sm:block" />
 
               {[
                 {
@@ -498,17 +498,17 @@ export default function Home() {
                 },
               ].map((step, i) => (
                 <div key={i} className="relative flex gap-5 pb-10 last:pb-0">
-                  <div className="relative z-10 shrink-0 w-12 h-12 rounded-full bg-zinc-900 border-2 border-violet-500/50 flex items-center justify-center text-violet-400">
+                  <div className="relative z-10 shrink-0 w-12 h-12 rounded-full bg-calypso-900 border-2 border-calypso-500/50 flex items-center justify-center text-calypso-300">
                     {step.icon}
                   </div>
                   <div className="flex-1 pt-1">
                     <div className="flex flex-wrap items-baseline gap-3 mb-1.5">
                       <h3 className="text-white font-semibold text-base">{step.title}</h3>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 font-mono">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-calypso-500/10 border border-calypso-500/20 text-calypso-300 font-mono">
                         {step.time}
                       </span>
                     </div>
-                    <p className="text-sm text-zinc-400 leading-relaxed">{step.desc}</p>
+                    <p className="text-sm text-calypso-300 leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -517,13 +517,13 @@ export default function Home() {
         </section>
 
         {/* ── SECTION 5: LOS 4 AGENTES ────────────────────────────────────── */}
-        <section className="py-20 px-6 border-t border-zinc-800/50">
+        <section className="py-20 px-6 border-t border-calypso-800/50">
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
                 4 agentes de IA trabajando para ti
               </h2>
-              <p className="text-zinc-500 max-w-xl mx-auto">
+              <p className="text-calypso-400 max-w-xl mx-auto">
                 Cada agente tiene un rol especializado. Juntos gestionan toda tu economia digital.
               </p>
             </div>
@@ -545,8 +545,8 @@ export default function Home() {
                   badge: 'Blockchain',
                   desc: 'Despliega colecciones ERC-721, acuna NFTs con metadata valido y los sube a IPFS via Pinata automaticamente.',
                   tags: ['Rare Protocol', 'IPFS', 'ERC-721'],
-                  badgeColor: 'bg-violet-500/10 border-violet-500/20 text-violet-400',
-                  iconBg: 'bg-violet-500/10 border-violet-500/20 text-violet-400',
+                  badgeColor: 'bg-calypso-500/10 border-calypso-500/20 text-calypso-300',
+                  iconBg: 'bg-calypso-500/10 border-calypso-500/20 text-calypso-300',
                 },
                 {
                   icon: <IconAuction className="w-6 h-6" />,
@@ -569,7 +569,7 @@ export default function Home() {
               ].map((agent) => (
                 <div
                   key={agent.title}
-                  className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 flex flex-col gap-4 hover:border-violet-500/30 transition-colors"
+                  className="rounded-2xl border border-calypso-800 bg-calypso-900/50 p-6 flex flex-col gap-4 hover:border-calypso-500/30 transition-colors"
                 >
                   <div className="flex items-start justify-between">
                     <div className={`w-12 h-12 rounded-xl border flex items-center justify-center ${agent.iconBg}`}>
@@ -581,11 +581,11 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-white font-semibold text-base mb-2">{agent.title}</h3>
-                    <p className="text-sm text-zinc-400 leading-relaxed">{agent.desc}</p>
+                    <p className="text-sm text-calypso-300 leading-relaxed">{agent.desc}</p>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {agent.tags.map((tag) => (
-                      <span key={tag} className="text-xs px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-500 font-mono">
+                      <span key={tag} className="text-xs px-2.5 py-1 rounded-md bg-calypso-800 text-calypso-400 font-mono">
                         {tag}
                       </span>
                     ))}
@@ -597,7 +597,7 @@ export default function Home() {
         </section>
 
         {/* ── SECTION 6: DATOS DEL MERCADO ────────────────────────────────── */}
-        <section className="py-20 px-6 border-t border-zinc-800/50">
+        <section className="py-20 px-6 border-t border-calypso-800/50">
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -607,34 +607,34 @@ export default function Home() {
 
             <div className="grid md:grid-cols-2 gap-8">
               {/* Chart 1 — Remesas: AreaChart con gradiente */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div className="rounded-2xl border border-calypso-800 bg-calypso-900/50 p-6">
                 <h3 className="text-white font-semibold mb-1">
                   Remesas a Mexico (miles de millones USD)
                 </h3>
-                <p className="text-xs text-zinc-600 mb-6">Fuente: Banco de Mexico</p>
+                <p className="text-xs text-calypso-600 mb-6">Fuente: Banco de Mexico</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <AreaChart data={remesasData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="remesasGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#40809a" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#40809a" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                    <XAxis dataKey="year" tick={{ fill: '#71717a', fontSize: 12 }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: '#71717a', fontSize: 11 }} axisLine={false} tickLine={false} domain={[35, 70]} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#304a5a" />
+                    <XAxis dataKey="year" tick={{ fill: '#5b9db5', fontSize: 12 }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fill: '#5b9db5', fontSize: 11 }} axisLine={false} tickLine={false} domain={[35, 70]} />
                     <Tooltip
-                      contentStyle={{ background: '#18181b', border: '1px solid #3f3f46', borderRadius: 8, color: '#fff' }}
+                      contentStyle={{ background: '#2c3f4d', border: '1px solid #304a5a', borderRadius: 8, color: '#fff' }}
                       formatter={(v) => [`$${v}B USD`, 'Remesas']}
                     />
                     <Area
                       type="monotone"
                       dataKey="amount"
-                      stroke="#8b5cf6"
+                      stroke="#40809a"
                       strokeWidth={2.5}
                       fill="url(#remesasGrad)"
-                      dot={{ fill: '#8b5cf6', r: 4, strokeWidth: 0 }}
-                      activeDot={{ r: 6, fill: '#a78bfa', strokeWidth: 0 }}
+                      dot={{ fill: '#40809a', r: 4, strokeWidth: 0 }}
+                      activeDot={{ r: 6, fill: '#5b9db5', strokeWidth: 0 }}
                       isAnimationActive
                       animationDuration={1800}
                       animationEasing="ease-out"
@@ -644,24 +644,24 @@ export default function Home() {
               </div>
 
               {/* Chart 2 — NFT LATAM: BarChart con animacion escalonada */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div className="rounded-2xl border border-calypso-800 bg-calypso-900/50 p-6">
                 <h3 className="text-white font-semibold mb-1">
                   Crecimiento NFT en LATAM (indice base 100)
                 </h3>
-                <p className="text-xs text-zinc-600 mb-6">CAGR 30.8% — Fuente: AInvest Research 2025</p>
+                <p className="text-xs text-calypso-600 mb-6">CAGR 30.8% — Fuente: AInvest Research 2025</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={nftLatamData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#a78bfa" />
-                        <stop offset="100%" stopColor="#6d28d9" />
+                        <stop offset="0%" stopColor="#5b9db5" />
+                        <stop offset="100%" stopColor="#32576c" />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                    <XAxis dataKey="year" tick={{ fill: '#71717a', fontSize: 12 }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: '#71717a', fontSize: 11 }} axisLine={false} tickLine={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#304a5a" />
+                    <XAxis dataKey="year" tick={{ fill: '#5b9db5', fontSize: 12 }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fill: '#5b9db5', fontSize: 11 }} axisLine={false} tickLine={false} />
                     <Tooltip
-                      contentStyle={{ background: '#18181b', border: '1px solid #3f3f46', borderRadius: 8, color: '#fff' }}
+                      contentStyle={{ background: '#2c3f4d', border: '1px solid #304a5a', borderRadius: 8, color: '#fff' }}
                       formatter={(v) => [Number(v).toFixed(1), 'Indice']}
                     />
                     <Bar
@@ -684,10 +684,10 @@ export default function Home() {
                 { value: '116%', label: 'Crecimiento crypto en LATAM en 2024', source: 'Bitso + Coinchange' },
                 { value: '3.3M', label: 'Creadores digitales en Mexico', source: 'BBVA Research 2024' },
               ].map((d) => (
-                <div key={d.value} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 text-center">
-                  <p className="text-3xl font-bold text-violet-400 mb-1">{d.value}</p>
-                  <p className="text-sm text-zinc-400 leading-snug">{d.label}</p>
-                  <p className="text-xs text-zinc-600 mt-1">{d.source}</p>
+                <div key={d.value} className="rounded-xl border border-calypso-800 bg-calypso-900/40 p-5 text-center">
+                  <p className="text-3xl font-bold text-calypso-300 mb-1">{d.value}</p>
+                  <p className="text-sm text-calypso-300 leading-snug">{d.label}</p>
+                  <p className="text-xs text-calypso-600 mt-1">{d.source}</p>
                 </div>
               ))}
             </div>
@@ -695,7 +695,7 @@ export default function Home() {
         </section>
 
         {/* ── SECTION 7: PARA QUIEN ES NEXUS ─────────────────────────────── */}
-        <section className="py-20 px-6 border-t border-zinc-800/50">
+        <section className="py-20 px-6 border-t border-calypso-800/50">
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold text-white">¿Eres tu?</h2>
@@ -705,7 +705,7 @@ export default function Home() {
               {[
                 {
                   icon: <IconPalette className="w-6 h-6" />,
-                  iconBg: 'bg-violet-500/10 border-violet-500/20 text-violet-400',
+                  iconBg: 'bg-calypso-500/10 border-calypso-500/20 text-calypso-300',
                   title: 'El Artista Digital',
                   desc: 'Tienes talento, tienes obras. Te falta el mercado global. NEXUS te conecta con compradores en todo el mundo sin que tengas que aprender ingles ni blockchain.',
                 },
@@ -730,13 +730,13 @@ export default function Home() {
               ].map((p) => (
                 <div
                   key={p.title}
-                  className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 flex flex-col gap-4 hover:border-violet-500/30 transition-colors"
+                  className="rounded-2xl border border-calypso-800 bg-calypso-900/50 p-6 flex flex-col gap-4 hover:border-calypso-500/30 transition-colors"
                 >
                   <div className={`w-12 h-12 rounded-xl border flex items-center justify-center ${p.iconBg}`}>
                     {p.icon}
                   </div>
                   <h3 className="text-white font-semibold">{p.title}</h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed">{p.desc}</p>
+                  <p className="text-sm text-calypso-300 leading-relaxed">{p.desc}</p>
                 </div>
               ))}
             </div>
@@ -745,7 +745,7 @@ export default function Home() {
 
 
         {/* ── FOOTER agregacion de extras ──────────────────────────────────────────────────────── */}
-        <footer className="border-t border-zinc-800 bg-zinc-950 py-12 px-6">
+        <footer className="border-t border-calypso-800 bg-calypso-950 py-12 px-6">
           <div className="mx-auto max-w-5xl">
             <div className="flex flex-col md:flex-row items-start justify-between gap-10 mb-10">
               <div className="flex flex-col gap-2">
@@ -756,12 +756,12 @@ export default function Home() {
                   height={22}
                   className="h-6 w-auto object-contain"
                 />
-                <p className="text-xs text-zinc-600">© 2026 NEXUS Protocol</p>
+                <p className="text-xs text-calypso-600">© 2026 NEXUS Protocol</p>
               </div>
 
               <div className="flex gap-12">
                 <div>
-                  <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+                  <p className="text-xs font-semibold text-calypso-400 uppercase tracking-wider mb-3">
                     Producto
                   </p>
                   <ul className="flex flex-col gap-2">
@@ -771,7 +771,7 @@ export default function Home() {
                       { href: '/admin', label: 'Admin' },
                     ].map(({ href, label }) => (
                       <li key={href}>
-                        <Link href={href} className="text-sm text-zinc-500 hover:text-white transition-colors">
+                        <Link href={href} className="text-sm text-calypso-400 hover:text-white transition-colors">
                           {label}
                         </Link>
                       </li>
@@ -779,13 +779,13 @@ export default function Home() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+                  <p className="text-xs font-semibold text-calypso-400 uppercase tracking-wider mb-3">
                     Ecosistema
                   </p>
                   <ul className="flex flex-col gap-2">
                     {['Rare Protocol', 'Bitso', 'Ethereum Mexico', 'Arbitrum'].map((label) => (
                       <li key={label}>
-                        <span className="text-sm text-zinc-500">{label}</span>
+                        <span className="text-sm text-calypso-400">{label}</span>
                       </li>
                     ))}
                   </ul>
@@ -793,8 +793,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="border-t border-zinc-800 pt-6">
-              <p className="text-xs text-zinc-700 leading-relaxed max-w-2xl">
+            <div className="border-t border-calypso-800 pt-6">
+              <p className="text-xs text-calypso-700 leading-relaxed max-w-2xl">
                 NEXUS Protocol es un proyecto experimental presentado en ETH Mexico 2026. Los NFTs
                 se despliegan en Ethereum Sepolia (testnet). El SPEI usa Bitso Business Stage
                 (sandbox).

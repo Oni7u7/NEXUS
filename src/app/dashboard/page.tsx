@@ -143,22 +143,22 @@ function BidModal({
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 w-full max-w-sm space-y-4">
+      <div className="bg-calypso-900 border border-calypso-700 rounded-2xl p-6 w-full max-w-sm space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-white font-bold text-base">Hacer puja en eth</h3>
-          <button onClick={onClose} className="text-zinc-500 hover:text-white text-xl leading-none">×</button>
+          <button onClick={onClose} className="text-calypso-400 hover:text-white text-xl leading-none">×</button>
         </div>
 
-        <p className="text-zinc-500 text-xs font-mono">
+        <p className="text-calypso-400 text-xs font-mono">
           Token #{tokenId} · {contract.slice(0, 6)}...{contract.slice(-4)}
         </p>
 
         {currentBidEth !== null && (
-          <div className="bg-zinc-800 rounded-lg px-3 py-2 text-sm">
-            <span className="text-zinc-400">Oferta actual: </span>
+          <div className="bg-calypso-800 rounded-lg px-3 py-2 text-sm">
+            <span className="text-calypso-300">Oferta actual: </span>
             <span className="text-white font-semibold">{currentBidEth.toFixed(4)} ETH</span>
             {ethPriceMXN && (
-              <span className="text-zinc-500 ml-1">
+              <span className="text-calypso-400 ml-1">
                 (${(currentBidEth * ethPriceMXN).toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN)
               </span>
             )}
@@ -180,7 +180,7 @@ function BidModal({
         )}
 
         <div>
-          <label className="text-zinc-400 text-xs block mb-1">
+          <label className="text-calypso-300 text-xs block mb-1">
             Tu puja en ETH (mínimo ~{minBid.toFixed(4)} ETH)
           </label>
           <input
@@ -190,10 +190,10 @@ function BidModal({
             value={bidAmount}
             onChange={(e) => setBidAmount(e.target.value)}
             placeholder={`0.${minBid.toFixed(3).slice(2)}`}
-            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm placeholder:text-zinc-600 focus:outline-none focus:border-violet-500"
+            className="w-full bg-calypso-800 border border-calypso-700 rounded-lg px-3 py-2 text-white text-sm placeholder:text-calypso-500 focus:outline-none focus:border-calypso-500"
           />
           {bidMXN !== null && (
-            <p className="text-zinc-500 text-xs mt-1">
+            <p className="text-calypso-400 text-xs mt-1">
               ≈ ${bidMXN.toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN
             </p>
           )}
@@ -212,7 +212,7 @@ function BidModal({
         <button
           onClick={handleBid}
           disabled={isPending || !bidAmount || bidEth <= 0 || !hasBalance || isSuccess}
-          className="w-full py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-sm transition-colors"
+          className="w-full py-2.5 rounded-xl bg-calypso-600 hover:bg-calypso-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-sm transition-colors"
         >
           {isPending ? 'Firmando...' : 'Confirmar puja con mi wallet'}
         </button>
@@ -249,8 +249,8 @@ function UserAuctionCard({
   }, [auction.metadataUri, imageUrl])
 
   return (
-    <div className={`bg-zinc-900 rounded-2xl overflow-hidden border ${auction.settled ? 'border-green-700/60' : 'border border-violet-500/20'}`}>
-      <div className="relative aspect-square bg-zinc-800 rounded-lg overflow-hidden">
+    <div className={`bg-calypso-900 rounded-2xl overflow-hidden border ${auction.settled ? 'border-green-700/60' : 'border border-calypso-500/20'}`}>
+      <div className="relative aspect-square bg-calypso-800 rounded-lg overflow-hidden">
         {imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -273,7 +273,7 @@ function UserAuctionCard({
 
         {auction.settled ? (
           <div>
-            <p className="text-zinc-500 text-xs">Monto recibido</p>
+            <p className="text-calypso-400 text-xs">Monto recibido</p>
             <p className="text-green-400 font-semibold text-sm">
               ${(auction.creatorMXN ?? 0).toLocaleString('es-MX', { minimumFractionDigits: 2 })} MXN
             </p>
@@ -281,15 +281,15 @@ function UserAuctionCard({
         ) : (
           <>
             <div>
-              <p className="text-zinc-500 text-xs">Precio de reserva</p>
-              <p className="text-violet-400 font-semibold text-sm">{auction.reservePrice} ETH</p>
+              <p className="text-calypso-400 text-xs">Precio de reserva</p>
+              <p className="text-calypso-300 font-semibold text-sm">{auction.reservePrice} ETH</p>
               {reserveMXN && (
-                <p className="text-zinc-400 text-xs">
+                <p className="text-calypso-300 text-xs">
                   ${reserveMXN.toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN
                 </p>
               )}
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-zinc-400">
+            <div className="flex items-center gap-1.5 text-xs text-calypso-300">
               <span>⏱</span>
               <Countdown endTime={auction.endTime} />
             </div>
@@ -330,14 +330,14 @@ function MarketCard({
 
   return (
     <>
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition-colors">
-        <div className="aspect-square bg-zinc-800 relative">
+      <div className="bg-calypso-900 border border-calypso-800 rounded-2xl overflow-hidden hover:border-calypso-700 transition-colors">
+        <div className="aspect-square bg-calypso-800 relative">
           {imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={imageUrl} alt={item.name ?? 'NFT'} className="w-full h-full object-cover" />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <span className="text-zinc-600 text-4xl">🎨</span>
+              <span className="text-calypso-600 text-4xl">🎨</span>
             </div>
           )}
         </div>
@@ -346,25 +346,25 @@ function MarketCard({
             <h3 className="text-white font-medium truncate text-sm">
               {item.name ?? `Token #${item.tokenId}`}
             </h3>
-            <span className="shrink-0 text-xs text-zinc-500 border border-zinc-700 rounded-full px-2 py-0.5">
+            <span className="shrink-0 text-xs text-calypso-400 border border-calypso-700 rounded-full px-2 py-0.5">
               Mercado de referencia
             </span>
           </div>
 
           {bidMXN !== null ? (
             <div>
-              <p className="text-zinc-500 text-xs">Oferta actual</p>
-              <p className="text-zinc-300 font-semibold text-sm">{bidEth?.toFixed(4)} ETH</p>
-              <p className="text-zinc-500 text-xs">
+              <p className="text-calypso-400 text-xs">Oferta actual</p>
+              <p className="text-calypso-200 font-semibold text-sm">{bidEth?.toFixed(4)} ETH</p>
+              <p className="text-calypso-400 text-xs">
                 ${bidMXN.toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN
               </p>
             </div>
           ) : (
-            <p className="text-zinc-600 text-xs">Sin ofertas</p>
+            <p className="text-calypso-600 text-xs">Sin ofertas</p>
           )}
 
           {item.endTime && (
-            <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+            <div className="flex items-center gap-1.5 text-xs text-calypso-400">
               <span>⏱</span>
               <Countdown endTime={item.endTime} />
             </div>
@@ -373,7 +373,7 @@ function MarketCard({
           <div className="flex gap-2 mt-2">
             <button
               onClick={() => setShowBidModal(true)}
-              className="flex-1 text-center text-xs text-white bg-violet-600 hover:bg-violet-500 rounded-lg py-1.5 font-medium transition-colors"
+              className="flex-1 text-center text-xs text-white bg-calypso-600 hover:bg-calypso-500 rounded-lg py-1.5 font-medium transition-colors"
             >
               Pujar →
             </button>
@@ -381,7 +381,7 @@ function MarketCard({
               href={`https://superrare.com/${item.contract}/${item.tokenId}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 block text-center text-xs text-zinc-500 hover:text-zinc-300 border border-zinc-700 hover:border-zinc-600 rounded-lg py-1.5 transition-colors"
+              className="flex-1 block text-center text-xs text-calypso-400 hover:text-calypso-200 border border-calypso-700 hover:border-calypso-600 rounded-lg py-1.5 transition-colors"
             >
               Ver en Rare →
             </a>
@@ -517,42 +517,42 @@ export default function DashboardPage() {
 
   if (!ready) {
     return (
-      <div className="flex h-screen items-center justify-center bg-zinc-950">
-        <div className="w-6 h-6 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <div className="flex h-screen items-center justify-center bg-calypso-950">
+        <div className="w-6 h-6 border-2 border-calypso-500 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
 
   if (!authenticated) {
     return (
-      <div className="flex h-screen items-center justify-center bg-zinc-950 flex-col gap-4">
-        <p className="text-zinc-400 text-sm">Conecta tu cuenta para ver tus subastas</p>
+      <div className="flex h-screen items-center justify-center bg-calypso-950 flex-col gap-4">
+        <p className="text-calypso-300 text-sm">Conecta tu cuenta para ver tus subastas</p>
         <WalletButton />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 pb-16">
+    <div className="min-h-screen bg-calypso-950 pb-16">
       {/* Banner de nueva puja */}
       {newBidNotification && (
         <div
           className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4 animate-in slide-in-from-top-4 duration-300"
         >
-          <div className="bg-violet-900 border border-violet-600 rounded-xl p-4 shadow-xl">
+          <div className="bg-calypso-800 border border-calypso-600 rounded-xl p-4 shadow-xl">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-white font-semibold text-sm">
                   🔔 ¡Nueva puja en Token #{newBidNotification.tokenId}!
                 </p>
-                <p className="text-violet-200 text-xs mt-0.5">
+                <p className="text-calypso-200 text-xs mt-0.5">
                   Alguien ofreció {newBidNotification.bidAmount} ETH
                   (~${newBidNotification.bidAmountMXN.toLocaleString('es-MX')} MXN)
                 </p>
               </div>
               <button
                 onClick={() => setNewBidNotification(null)}
-                className="text-violet-300 hover:text-white text-lg leading-none shrink-0"
+                className="text-calypso-300 hover:text-white text-lg leading-none shrink-0"
               >
                 ×
               </button>
@@ -570,8 +570,8 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-white font-bold text-lg">Mis subastas</h2>
             {ethPriceMXN && (
-              <span className="text-xs text-zinc-500">
-                ETH <span className="text-violet-400 font-medium">${ethPriceMXN.toLocaleString('es-MX')} MXN</span>
+              <span className="text-xs text-calypso-400">
+                ETH <span className="text-calypso-300 font-medium">${ethPriceMXN.toLocaleString('es-MX')} MXN</span>
               </span>
             )}
           </div>
@@ -579,19 +579,19 @@ export default function DashboardPage() {
           {hasCollection ? (
             <>
               {/* Resumen de colección */}
-              <div className="bg-zinc-900 border border-violet-800/50 rounded-2xl p-4 mb-4 flex items-center justify-between">
+              <div className="bg-calypso-900 border border-calypso-700/50 rounded-2xl p-4 mb-4 flex items-center justify-between">
                 <div>
-                  <p className="text-zinc-400 text-xs">Colección</p>
+                  <p className="text-calypso-400 text-xs">Colección</p>
                   <p className="text-white font-semibold">
                     {mySession?.collectionName ?? 'Mi colección'}
                   </p>
-                  <p className="text-violet-400 font-mono text-xs mt-0.5">
+                  <p className="text-calypso-300 font-mono text-xs mt-0.5">
                     {mySession?.collectionAddress?.slice(0, 6)}...
                     {mySession?.collectionAddress?.slice(-4)}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-zinc-400 text-xs">NFTs acuñados</p>
+                  <p className="text-calypso-400 text-xs">NFTs acuñados</p>
                   <p className="text-white font-bold text-2xl">
                     {mySession?.mintedTokens.length ?? 0}
                   </p>
@@ -610,21 +610,21 @@ export default function DashboardPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-zinc-500 text-sm">
+                <p className="text-calypso-400 text-sm">
                   Tu colección está lista. Habla con NEXUS para crear subastas.
                 </p>
               )}
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center py-16 gap-4 bg-zinc-900/50 rounded-2xl border border-zinc-800">
+            <div className="flex flex-col items-center justify-center py-16 gap-4 bg-calypso-900/50 rounded-2xl border border-calypso-800">
               <span className="text-5xl">🎨</span>
-              <p className="text-zinc-300 font-medium">Aún no tienes colección</p>
-              <p className="text-zinc-600 text-sm text-center max-w-xs">
+              <p className="text-calypso-200 font-medium">Aún no tienes colección</p>
+              <p className="text-calypso-500 text-sm text-center max-w-xs">
                 Habla con NEXUS para lanzar tu primera colección y empezar a vender tu arte
               </p>
               <Link
                 href="/chat"
-                className="mt-1 px-6 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl text-sm font-medium transition-colors"
+                className="mt-1 px-6 py-2.5 bg-calypso-600 hover:bg-calypso-500 text-white rounded-xl text-sm font-medium transition-colors"
               >
                 Crea tu primera colección →
               </Link>
@@ -636,7 +636,7 @@ export default function DashboardPage() {
         <section>
           <div className="mb-4">
             <h2 className="text-white font-bold text-lg">Mercado global Rare Protocol</h2>
-            <p className="text-zinc-500 text-sm mt-1">
+            <p className="text-calypso-400 text-sm mt-1">
               Así se ve el mercado global donde venderá tu arte
             </p>
           </div>
@@ -646,12 +646,12 @@ export default function DashboardPage() {
               {[...Array(6)].map((_, i) => (
                 <div
                   key={i}
-                  className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden animate-pulse"
+                  className="bg-calypso-900 border border-calypso-800 rounded-2xl overflow-hidden animate-pulse"
                 >
-                  <div className="aspect-square bg-zinc-800" />
+                  <div className="aspect-square bg-calypso-800" />
                   <div className="p-4 space-y-2">
-                    <div className="h-4 bg-zinc-800 rounded w-3/4" />
-                    <div className="h-3 bg-zinc-800 rounded w-1/2" />
+                    <div className="h-4 bg-calypso-800 rounded w-3/4" />
+                    <div className="h-3 bg-calypso-800 rounded w-1/2" />
                   </div>
                 </div>
               ))}
@@ -667,7 +667,7 @@ export default function DashboardPage() {
               ))}
             </div>
           ) : (
-            <p className="text-zinc-600 text-sm">
+            <p className="text-calypso-600 text-sm">
               No hay datos de mercado disponibles en este momento.
             </p>
           )}

@@ -15,7 +15,7 @@ export default function WalletButton() {
     return (
       <button
         disabled
-        className="px-4 py-2 rounded-full bg-violet-600/40 text-white/50 text-sm font-medium cursor-not-allowed"
+        className="px-4 py-2 rounded-full bg-calypso-600/40 text-white/50 text-sm font-medium cursor-not-allowed"
       >
         Connect Wallet
       </button>
@@ -31,7 +31,7 @@ export default function WalletButton() {
     return (
       <button
         onClick={() => logout()}
-        className="px-4 py-2 rounded-full border border-violet-500 text-violet-400 text-sm font-medium hover:bg-violet-500/10 transition-colors cursor-pointer"
+        className="px-4 py-2 rounded-full border border-calypso-500 text-calypso-300 text-sm font-medium hover:bg-calypso-500/10 transition-colors cursor-pointer"
       >
         {display}
       </button>
@@ -41,7 +41,7 @@ export default function WalletButton() {
   return (
     <button
       onClick={() => login()}
-      className="px-4 py-2 rounded-full bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors cursor-pointer"
+      className="px-4 py-2 rounded-full bg-calypso-600 hover:bg-calypso-500 text-white text-sm font-medium transition-colors cursor-pointer"
     >
       Connect Wallet
     </button>

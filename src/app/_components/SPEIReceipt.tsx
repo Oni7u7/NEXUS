@@ -34,10 +34,10 @@ function printReceipt(data: SPEIReceiptData) {
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; display: flex; justify-content: center; padding: 32px 16px; }
     .receipt { background: #fff; width: 420px; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,.12); overflow: hidden; }
-    .header { background: #18181b; color: #fff; padding: 20px 24px; }
+    .header { background: #192833; color: #fff; padding: 20px 24px; }
     .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-    .logo span { color: #a78bfa; }
-    .subtitle { font-size: 11px; color: #a1a1aa; margin-top: 2px; }
+    .logo span { color: #5b9db5; }
+    .subtitle { font-size: 11px; color: #90c0d0; margin-top: 2px; }
     .status-bar { background: #16a34a; color: #fff; padding: 10px 24px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
     .body { padding: 24px; }
     .amount-block { text-align: center; padding: 20px 0 24px; border-bottom: 1px dashed #e4e4e7; }
@@ -104,7 +104,7 @@ function WithdrawalStatusLabel({ status }: { status?: string }) {
   if (!status) return null
   const map: Record<string, { label: string; className: string }> = {
     pending:    { label: '⏳ Procesando transferencia...', className: 'bg-yellow-900/60 text-yellow-300 border-yellow-700' },
-    processing: { label: '🔄 En camino a tu cuenta...', className: 'bg-blue-900/60 text-blue-300 border-blue-700' },
+    processing: { label: '🔄 En camino a tu cuenta...', className: 'bg-calypso-900/60 text-calypso-200 border-calypso-700' },
     complete:   { label: '✅ ¡Dinero recibido en tu cuenta!', className: 'bg-green-900/60 text-green-400 border-green-700' },
     failed:     { label: '❌ Error en la transferencia — contacta soporte', className: 'bg-red-900/60 text-red-400 border-red-700' },
   }
@@ -152,17 +152,17 @@ export default function SPEIReceipt({
   })
 
   const inner = (
-    <div className="rounded-xl border border-zinc-700 overflow-hidden text-sm bg-zinc-900">
+    <div className="rounded-xl border border-calypso-700 overflow-hidden text-sm bg-calypso-900">
       {/* Header */}
-      <div className="bg-zinc-950 px-4 py-3 flex items-center justify-between">
+      <div className="bg-calypso-950 px-4 py-3 flex items-center justify-between">
         <div>
           <span className="font-bold text-white tracking-tight">
-            NEX<span className="text-violet-400">US</span>
+            NEX<span className="text-calypso-300">US</span>
           </span>
-          <span className="ml-2 text-zinc-500 text-xs">Comprobante SPEI</span>
+          <span className="ml-2 text-calypso-400 text-xs">Comprobante SPEI</span>
         </div>
         {liveStatus === 'simulated' ? (
-          <span className="text-xs bg-blue-900/60 text-blue-300 border border-blue-700 rounded-full px-2 py-0.5 font-medium">
+          <span className="text-xs bg-calypso-800/60 text-calypso-200 border border-calypso-700 rounded-full px-2 py-0.5 font-medium">
             🔵 Demo — En producción llegaría vía SPEI real
           </span>
         ) : isReal ? (
@@ -175,10 +175,10 @@ export default function SPEIReceipt({
       </div>
 
       {/* Monto destacado */}
-      <div className="text-center py-4 border-b border-dashed border-zinc-700">
-        <p className="text-zinc-500 text-xs uppercase tracking-wide">Monto a recibir</p>
+      <div className="text-center py-4 border-b border-dashed border-calypso-700">
+        <p className="text-calypso-400 text-xs uppercase tracking-wide">Monto a recibir</p>
         <p className="text-2xl font-extrabold text-white mt-1">
-          ${monto} <span className="text-base font-semibold text-zinc-400">MXN</span>
+          ${monto} <span className="text-base font-semibold text-calypso-300">MXN</span>
         </p>
       </div>
 
@@ -191,9 +191,9 @@ export default function SPEIReceipt({
           { label: 'Tiempo estimado', value: '2 – 4 horas hábiles' },
         ].map(({ label, value, mono }) => (
           <div key={label} className="flex justify-between gap-4">
-            <span className="text-zinc-500 text-xs shrink-0">{label}</span>
+            <span className="text-calypso-400 text-xs shrink-0">{label}</span>
             <span
-              className={`text-zinc-200 text-xs text-right ${mono ? 'font-mono' : 'font-medium'}`}
+              className={`text-calypso-100 text-xs text-right ${mono ? 'font-mono' : 'font-medium'}`}
             >
               {value}
             </span>
@@ -202,11 +202,11 @@ export default function SPEIReceipt({
       </div>
 
       {/* Footer */}
-      <div className="border-t border-zinc-800 px-4 py-3 flex items-center justify-between">
-        <p className="text-zinc-600 text-xs">Procesado via Bitso · NEXUS Protocol</p>
+      <div className="border-t border-calypso-800 px-4 py-3 flex items-center justify-between">
+        <p className="text-calypso-600 text-xs">Procesado via Bitso · NEXUS Protocol</p>
         <button
           onClick={() => printReceipt(data)}
-          className="text-xs text-violet-400 hover:text-violet-300 font-medium transition-colors"
+          className="text-xs text-calypso-300 hover:text-calypso-200 font-medium transition-colors"
         >
           Guardar PDF →
         </button>
@@ -226,7 +226,7 @@ function CollapsibleReceipt({ children }: { children: React.ReactNode }) {
     <div className="mt-3">
       <button
         onClick={() => setOpen((v: boolean) => !v)}
-        className="text-xs text-zinc-400 hover:text-white flex items-center gap-1 transition-colors"
+        className="text-xs text-calypso-300 hover:text-white flex items-center gap-1 transition-colors"
       >
         <span>🏦 Ver comprobante SPEI</span>
         <span>{open ? '▲' : '▼'}</span>

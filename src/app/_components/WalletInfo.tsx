@@ -90,27 +90,27 @@ export default function WalletInfo() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-lg rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 flex flex-col gap-5">
+    <div className="mx-auto w-full max-w-lg rounded-2xl border border-calypso-800 bg-calypso-900/60 p-6 flex flex-col gap-5">
       {/* Balance */}
       <div className="flex flex-col gap-1">
-        <span className="text-xs text-zinc-500 uppercase tracking-widest">Balance</span>
+        <span className="text-xs text-calypso-400 uppercase tracking-widest">Balance</span>
         <span className="text-3xl font-bold text-white">
           {isLoading ? (
-            <span className="text-zinc-600 text-lg">Loading...</span>
+            <span className="text-calypso-600 text-lg">Loading...</span>
           ) : formatted !== null ? (
             <>
               {formatted}{' '}
-              <span className="text-violet-400 text-lg">{balance?.symbol}</span>
+              <span className="text-calypso-300 text-lg">{balance?.symbol}</span>
             </>
           ) : (
-            <span className="text-zinc-600 text-lg">—</span>
+            <span className="text-calypso-600 text-lg">—</span>
           )}
         </span>
       </div>
 
       {/* Network selector */}
       <div className="flex flex-col gap-2">
-        <span className="text-xs text-zinc-500 uppercase tracking-widest">Network</span>
+        <span className="text-xs text-calypso-400 uppercase tracking-widest">Network</span>
         <div className="grid grid-cols-2 gap-2">
           {CHAINS.map((entry) => {
             const active = chainId === entry.chain.id
@@ -122,8 +122,8 @@ export default function WalletInfo() {
                 disabled={!!switching || active}
                 className={`px-3 py-2 rounded-xl text-sm font-medium transition-colors border ${
                   active
-                    ? 'bg-violet-600 border-violet-500 text-white cursor-default'
-                    : 'bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700 hover:border-zinc-500 cursor-pointer'
+                    ? 'bg-calypso-600 border-calypso-500 text-white cursor-default'
+                    : 'bg-calypso-800 border-calypso-700 text-calypso-200 hover:bg-calypso-700 hover:border-calypso-500 cursor-pointer'
                 } disabled:opacity-60`}
               >
                 {pending ? 'Agregando...' : entry.label}

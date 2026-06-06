@@ -47,11 +47,11 @@ interface SessionState {
 
 function ToolPill({ name, done }: { name: string; done: boolean }) {
   return (
-    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-700 text-violet-400 text-xs w-fit">
+    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-calypso-800 text-calypso-300 text-xs w-fit">
       {done ? (
         <span className="text-green-400">✓</span>
       ) : (
-        <span className="animate-spin inline-block w-3 h-3 border border-violet-400 border-t-transparent rounded-full" />
+        <span className="animate-spin inline-block w-3 h-3 border border-calypso-300 border-t-transparent rounded-full" />
       )}
       <span>{name}</span>
     </div>
@@ -70,7 +70,7 @@ function ChatMessage({ msg }: { msg: Message }) {
   if (msg.role === 'system') {
     return (
       <div className="mb-3">
-        <pre className="bg-zinc-900 border border-zinc-700 rounded-lg p-3 font-mono text-xs text-zinc-400 whitespace-pre-wrap overflow-x-auto">
+        <pre className="bg-calypso-900 border border-calypso-700 rounded-lg p-3 font-mono text-xs text-calypso-300 whitespace-pre-wrap overflow-x-auto">
           {msg.content}
         </pre>
       </div>
@@ -88,8 +88,8 @@ function ChatMessage({ msg }: { msg: Message }) {
       <div
         className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
           isUser
-            ? 'bg-violet-600 text-white rounded-tr-sm'
-            : 'bg-zinc-800 text-zinc-100 rounded-tl-sm border-l-2 border-violet-500'
+            ? 'bg-calypso-600 text-white rounded-tr-sm'
+            : 'bg-calypso-800 text-calypso-100 rounded-tl-sm border-l-2 border-calypso-500'
         }`}
       >
         {msg.content}
@@ -110,10 +110,10 @@ function CollectionStatus({
   if (!state.collectionAddress && state.mintedTokens.length === 0) return null
 
   return (
-    <div className="border-t border-zinc-800 bg-zinc-950">
+    <div className="border-t border-calypso-800 bg-calypso-950">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-4 py-3 text-sm text-zinc-400 hover:text-white transition-colors"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm text-calypso-300 hover:text-white transition-colors"
       >
         <span>Estado de tu colección</span>
         <span>{open ? '▲' : '▼'}</span>
@@ -123,14 +123,14 @@ function CollectionStatus({
         <div className="px-4 pb-4 grid grid-cols-2 gap-3 text-sm">
           {state.collectionAddress && (
             <div className="col-span-2">
-              <span className="text-zinc-500 text-xs">Contrato</span>
+              <span className="text-calypso-400 text-xs">Contrato</span>
               <div className="flex items-center gap-2 mt-0.5">
-                <code className="text-violet-400 font-mono text-xs truncate">
+                <code className="text-calypso-300 font-mono text-xs truncate">
                   {state.collectionAddress}
                 </code>
                 <button
                   onClick={() => navigator.clipboard.writeText(state.collectionAddress!)}
-                  className="text-zinc-600 hover:text-zinc-300 text-xs shrink-0"
+                  className="text-calypso-600 hover:text-calypso-300 text-xs shrink-0"
                   title="Copiar"
                 >
                   ⎘
@@ -140,17 +140,17 @@ function CollectionStatus({
           )}
 
           <div>
-            <span className="text-zinc-500 text-xs">NFTs acuñados</span>
+            <span className="text-calypso-400 text-xs">NFTs acuñados</span>
             <p className="text-white font-medium mt-0.5">{state.mintedTokens.length}</p>
           </div>
 
           <div>
-            <span className="text-zinc-500 text-xs">Subastas activas</span>
+            <span className="text-calypso-400 text-xs">Subastas activas</span>
             <p className="text-white font-medium mt-0.5">{state.activeAuctions.length}</p>
           </div>
 
           <div className="col-span-2">
-            <span className="text-zinc-500 text-xs">Total ganado</span>
+            <span className="text-calypso-400 text-xs">Total ganado</span>
             <p className="text-green-400 font-semibold mt-0.5">
               ${state.totalEarnedMXN.toLocaleString('es-MX', { minimumFractionDigits: 2 })} MXN
             </p>
@@ -158,11 +158,11 @@ function CollectionStatus({
 
           {ethPriceMXN && (
             <div className="col-span-2">
-              <span className="text-zinc-500 text-xs">Precio ETH ahora</span>
-              <p className="text-zinc-300 mt-0.5">
+              <span className="text-calypso-400 text-xs">Precio ETH ahora</span>
+              <p className="text-calypso-200 mt-0.5">
                 ${ethPriceMXN.toLocaleString('es-MX')} MXN (se Actualiza cada 30 segundos)
               </p>
-              
+
             </div>
           )}
         </div>
@@ -217,11 +217,11 @@ function ImageUploadButton({
         type="button"
         onClick={() => inputRef.current?.click()}
         disabled={disabled || uploading}
-        className="p-2 text-zinc-400 hover:text-white disabled:opacity-40 transition-colors"
+        className="p-2 text-calypso-300 hover:text-white disabled:opacity-40 transition-colors"
         title="Subir imagen"
       >
         {uploading ? (
-          <span className="animate-spin inline-block w-5 h-5 border border-zinc-400 border-t-transparent rounded-full" />
+          <span className="animate-spin inline-block w-5 h-5 border border-calypso-300 border-t-transparent rounded-full" />
         ) : (
           <span className="text-lg">📎</span>
         )}
@@ -536,29 +536,29 @@ export default function ChatPage() {
   // Auth overlay
   if (!ready) {
     return (
-      <div className="flex h-screen items-center justify-center bg-zinc-950">
-        <div className="w-6 h-6 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <div className="flex h-screen items-center justify-center bg-calypso-950">
+        <div className="w-6 h-6 border-2 border-calypso-500 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-950">
+    <div className="flex flex-col h-screen bg-calypso-950">
       <Header />
 
       <div className="flex flex-col flex-1 min-h-0 relative">
       {/* Sub-barra del chat */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800/60 bg-zinc-950/80 shrink-0 gap-3">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-calypso-800/60 bg-calypso-950/80 shrink-0 gap-3">
         <div className="flex items-center gap-3">
           {isLoading && (
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse shrink-0" />
+            <span className="w-1.5 h-1.5 rounded-full bg-calypso-400 animate-pulse shrink-0" />
           )}
           {ethPriceMXN && (
-            <div className="flex items-center gap-2.5 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5">
+            <div className="flex items-center gap-2.5 bg-calypso-900 border border-calypso-800 rounded-xl px-3 py-1.5">
               {/* Texto */}
               <div className="flex flex-col leading-none">
-                <span className="text-[10px] text-zinc-600 uppercase tracking-wider font-medium">ETH / MXN</span>
-                <span className="text-sm font-bold text-violet-400 tabular-nums mt-0.5">
+                <span className="text-[10px] text-calypso-600 uppercase tracking-wider font-medium">ETH / MXN</span>
+                <span className="text-sm font-bold text-calypso-300 tabular-nums mt-0.5">
                   ${ethPriceMXN.toLocaleString('es-MX')}
                 </span>
                 {priceChange !== null && (
@@ -573,15 +573,15 @@ export default function ChatPage() {
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={priceHistory} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
                       <RechartTooltip
-                        contentStyle={{ background: '#18181b', border: '1px solid #3f3f46', borderRadius: 6, padding: '2px 6px' }}
-                        itemStyle={{ color: '#a78bfa', fontSize: 10 }}
+                        contentStyle={{ background: '#2c3f4d', border: '1px solid #304a5a', borderRadius: 6, padding: '2px 6px' }}
+                        itemStyle={{ color: '#5b9db5', fontSize: 10 }}
                         formatter={(v) => [`$${Number(v).toLocaleString('es-MX')}`, 'ETH']}
                         labelFormatter={() => ''}
                       />
                       <Line
                         type="monotone"
                         dataKey="p"
-                        stroke={priceChange !== null && priceChange < 0 ? '#f87171' : '#a78bfa'}
+                        stroke={priceChange !== null && priceChange < 0 ? '#f87171' : '#5b9db5'}
                         strokeWidth={1.5}
                         dot={false}
                         isAnimationActive={false}
@@ -596,7 +596,7 @@ export default function ChatPage() {
         {messages.length > 1 && (
           <button
             onClick={handleNewConversation}
-            className="text-xs text-zinc-500 hover:text-red-400 transition-colors shrink-0"
+            className="text-xs text-calypso-400 hover:text-red-400 transition-colors shrink-0"
           >
             🗑️ Nueva conversación
           </button>
@@ -604,7 +604,7 @@ export default function ChatPage() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 bg-gradient-to-b from-zinc-950 to-zinc-900">
+      <div className="flex-1 overflow-y-auto px-4 py-4 bg-gradient-to-b from-calypso-950 to-calypso-900">
         {messages.map((msg) => (
           <ChatMessage key={msg.id} msg={msg} />
         ))}
@@ -619,10 +619,10 @@ export default function ChatPage() {
         {/* Indicador de escritura */}
         {isLoading && !activeTool && (
           <div className="flex justify-start mb-3">
-            <div className="bg-zinc-800 rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1">
-              <span className="w-2 h-2 bg-zinc-500 rounded-full animate-bounce [animation-delay:0ms]" />
-              <span className="w-2 h-2 bg-zinc-500 rounded-full animate-bounce [animation-delay:150ms]" />
-              <span className="w-2 h-2 bg-zinc-500 rounded-full animate-bounce [animation-delay:300ms]" />
+            <div className="bg-calypso-800 rounded-2xl rounded-tl-sm px-4 py-3 flex gap-1">
+              <span className="w-2 h-2 bg-calypso-400 rounded-full animate-bounce [animation-delay:0ms]" />
+              <span className="w-2 h-2 bg-calypso-400 rounded-full animate-bounce [animation-delay:150ms]" />
+              <span className="w-2 h-2 bg-calypso-400 rounded-full animate-bounce [animation-delay:300ms]" />
             </div>
           </div>
         )}
@@ -727,7 +727,7 @@ export default function ChatPage() {
       )}
 
       {/* Input bar */}
-      <div className="shrink-0 border-t border-zinc-800 backdrop-blur-sm bg-zinc-900/80">
+      <div className="shrink-0 border-t border-calypso-800 backdrop-blur-sm bg-calypso-900/80">
         <div className="flex items-end gap-2 px-3 py-2 max-w-3xl mx-auto">
           <ImageUploadButton onUpload={handleImageUpload} disabled={isLoading} />
 
@@ -739,14 +739,14 @@ export default function ChatPage() {
             placeholder="Escribe un mensaje..."
             rows={1}
             disabled={isLoading}
-            className="flex-1 bg-zinc-800 text-zinc-100 placeholder-zinc-500 rounded-xl px-4 py-2.5 text-sm resize-none outline-none focus:ring-1 focus:ring-violet-600 disabled:opacity-50 max-h-32 overflow-y-auto"
+            className="flex-1 bg-calypso-800 text-calypso-100 placeholder-calypso-500 rounded-xl px-4 py-2.5 text-sm resize-none outline-none focus:ring-1 focus:ring-calypso-600 disabled:opacity-50 max-h-32 overflow-y-auto"
             style={{ lineHeight: '1.5' }}
           />
 
           <button
             onClick={sendMessage}
             disabled={!input.trim() || isLoading}
-            className="p-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-40 disabled:cursor-not-allowed text-white transition-colors shrink-0"
+            className="p-2.5 rounded-xl bg-calypso-600 hover:bg-calypso-500 disabled:opacity-40 disabled:cursor-not-allowed text-white transition-colors shrink-0"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
@@ -760,8 +760,8 @@ export default function ChatPage() {
 
       {/* Auth overlay */}
       {!authenticated && (
-        <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4 z-50">
-          <p className="text-zinc-300 text-sm">Conecta tu cuenta para empezar</p>
+        <div className="absolute inset-0 bg-calypso-950/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4 z-50">
+          <p className="text-calypso-200 text-sm">Conecta tu cuenta para empezar</p>
           <WalletButton />
         </div>
       )}

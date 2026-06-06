@@ -22,7 +22,7 @@ export default function Header() {
   const isOwner = authenticated && connectedAddress === OWNER_WALLET
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-calypso-800 bg-calypso-950/80 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-6 py-2 flex items-center justify-between gap-6">
         <Link href="/" className="shrink-0 flex items-center gap-2">
           <Image
@@ -43,12 +43,12 @@ export default function Header() {
                   <Link
                     href={href}
                     className={`relative text-sm transition-colors pb-1 ${
-                      active ? 'text-white font-medium' : 'text-zinc-400 hover:text-white'
+                      active ? 'text-white font-medium' : 'text-calypso-300 hover:text-white'
                     }`}
                   >
                     {label}
                     {active && (
-                      <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-violet-500" />
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-calypso-500" />
                     )}
                   </Link>
                 </li>
@@ -62,12 +62,12 @@ export default function Header() {
                     <Link
                       href="/admin"
                       className={`relative text-sm transition-colors pb-1 ${
-                        active ? 'text-white font-medium' : 'text-zinc-400 hover:text-white'
+                        active ? 'text-white font-medium' : 'text-calypso-300 hover:text-white'
                       }`}
                     >
                       Admin
                       {active && (
-                        <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-violet-500" />
+                        <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-calypso-500" />
                       )}
                     </Link>
                   )
