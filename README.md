@@ -23,8 +23,8 @@
 
 <br/>
 
-[![Demo](https://img.shields.io/badge/Ver%20Demo%20en%20Vivo-%E2%86%92-00b4d8?style=for-the-badge)](http://localhost:3000)
-[![Chat con NEXUS](https://img.shields.io/badge/Hablar%20con%20NEXUS-%E2%86%92-7c3aed?style=for-the-badge)](http://localhost:3000/chat)
+[![Demo](https://img.shields.io/badge/Ver%20Demo%20en%20Vivo-%E2%86%92-00b4d8?style=for-the-badge)](https://nexus-sigma-tan.vercel.app)
+[![Chat con NEXUS](https://img.shields.io/badge/Hablar%20con%20NEXUS-%E2%86%92-7c3aed?style=for-the-badge)](https://nexus-sigma-tan.vercel.app/chat)
 
 </div>
 
