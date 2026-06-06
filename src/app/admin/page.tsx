@@ -11,6 +11,9 @@ interface AdminStats {
   protocolFees: number | null
   totalPaidMXN: number | null
   contractMode?: 'demo' | 'live'
+  bitsoMXNBalance?: string
+  bitsoUSDTBalance?: string
+  bitsoEnvironment?: 'stage' | 'production'
 }
 
 const OWNER_WALLET = process.env.NEXT_PUBLIC_OWNER_WALLET?.trim().toLowerCase() ?? ''
@@ -91,7 +94,7 @@ export default function AdminPage() {
   }
 
   const shortAddress = `${OWNER_WALLET.slice(0, 6)}...${OWNER_WALLET.slice(-4)}`
-  const protocolFeesMXN = stats?.protocolFees != null ? stats.protocolFees / 100 : null
+  const protocolFeesMXN = stats?.protocolFees != null ? stats.protocolFees : null
 
   return (
     <div className="min-h-screen bg-zinc-950 flex items-start justify-center pt-16 px-4">
@@ -169,6 +172,40 @@ export default function AdminPage() {
                       {protocolFeesMXN != null
                         ? `$${protocolFeesMXN.toLocaleString('es-MX')} MXN`
                         : 'N/A'}
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-zinc-600 text-sm">Sin datos</p>
+              )}
+            </div>
+
+            {/* Saldo Bitso Business */}
+            <div>
+              <h2 className="text-zinc-300 font-semibold text-sm mb-3">Saldo Bitso Business</h2>
+              {loadingStats ? (
+                <div className="space-y-2">
+                  <div className="h-3 bg-zinc-800 rounded animate-pulse w-2/3" />
+                  <div className="h-3 bg-zinc-800 rounded animate-pulse w-1/2" />
+                </div>
+              ) : stats ? (
+                <div className="bg-zinc-800 rounded-xl p-4 space-y-2 border border-zinc-700">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-zinc-400">MXN disponible</span>
+                    <span className="text-white font-medium">
+                      ${parseFloat(stats.bitsoMXNBalance ?? '0').toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-zinc-400">USDT disponible</span>
+                    <span className="text-white font-medium">
+                      {parseFloat(stats.bitsoUSDTBalance ?? '0').toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-zinc-400">Ambiente</span>
+                    <span className={`font-medium ${stats.bitsoEnvironment === 'stage' ? 'text-yellow-400' : 'text-green-400'}`}>
+                      {stats.bitsoEnvironment === 'stage' ? '🟡 Stage (pruebas)' : '🟢 Producción'}
                     </span>
                   </div>
                 </div>
