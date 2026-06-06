@@ -1,15 +1,33 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { usePrivy } from '@privy-io/react-auth'
 import { useQuery } from '@tanstack/react-query'
+import { useWriteContract, useWaitForTransactionReceipt, useBalance, useAccount } from 'wagmi'
+import { parseEther, formatEther } from 'viem'
 import Link from 'next/link'
 import WalletButton from '@/app/_components/WalletButton'
 import SPEIReceipt from '@/app/_components/SPEIReceipt'
 
-// ── IPFS helper ──────────────────────────────────────────────────────────────
+// ── Constantes ────────────────────────────────────────────────────────────────
 
 const PINATA_GATEWAY = 'https://gateway.pinata.cloud/ipfs/'
+const SUPER_RARE_BAZAAR_SEPOLIA = '0xC8Edc7049b233641ad3723D6C60019D1c8771612' as const
+
+const BAZAAR_ABI = [
+  {
+    name: 'bid',
+    type: 'function',
+    stateMutability: 'payable',
+    inputs: [
+      { name: '_originContract', type: 'address' },
+      { name: '_tokenId', type: 'uint256' },
+    ],
+    outputs: [],
+  },
+] as const
+
+// ── IPFS helper ───────────────────────────────────────────────────────────────
 
 function ipfsToHttp(uri?: string): string | null {
   if (!uri) return null
@@ -19,7 +37,7 @@ function ipfsToHttp(uri?: string): string | null {
   return null
 }
 
-// ── Tipos ────────────────────────────────────────────────────────────────────
+// ── Tipos ─────────────────────────────────────────────────────────────────────
 
 interface StoredAuction {
   contract: string
@@ -32,6 +50,7 @@ interface StoredAuction {
   clabe?: string
   ipfsImageUri?: string
   metadataUri?: string
+  lastKnownBid?: string
 }
 
 interface StoredSession {
@@ -50,7 +69,7 @@ interface MarketItem {
   endTime?: number
 }
 
-// ── Cuenta regresiva ─────────────────────────────────────────────────────────
+// ── Cuenta regresiva ──────────────────────────────────────────────────────────
 
 function Countdown({ endTime }: { endTime: number }) {
   const [display, setDisplay] = useState('')
@@ -75,6 +94,129 @@ function Countdown({ endTime }: { endTime: number }) {
   }, [endTime])
 
   return <span>{display}</span>
+}
+
+// ── BidModal ──────────────────────────────────────────────────────────────────
+
+function BidModal({
+  contract,
+  tokenId,
+  currentBidEth,
+  ethPriceMXN,
+  onClose,
+}: {
+  contract: string
+  tokenId: string
+  currentBidEth: number | null
+  ethPriceMXN: number | null
+  onClose: () => void
+}) {
+  const [bidAmount, setBidAmount] = useState('')
+  const { address } = useAccount()
+
+  const { data: balance } = useBalance({ address })
+  const hasBalance = balance && parseFloat(formatEther(balance.value)) > 0
+
+  const { writeContract, data: txHash, isPending, isError, error } = useWriteContract()
+
+  const { isSuccess } = useWaitForTransactionReceipt({ hash: txHash })
+
+  const bidEth = parseFloat(bidAmount) || 0
+  const bidMXN = bidEth && ethPriceMXN ? bidEth * ethPriceMXN : null
+  const minBid = currentBidEth ? currentBidEth * 1.05 : 0.001
+
+  function handleBid() {
+    if (!bidAmount || bidEth <= 0) return
+    writeContract({
+      address: SUPER_RARE_BAZAAR_SEPOLIA,
+      abi: BAZAAR_ABI,
+      functionName: 'bid',
+      args: [contract as `0x${string}`, BigInt(tokenId)],
+      value: parseEther(bidAmount),
+    })
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
+    >
+      <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 w-full max-w-sm space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-white font-bold text-base">Hacer puja</h3>
+          <button onClick={onClose} className="text-zinc-500 hover:text-white text-xl leading-none">×</button>
+        </div>
+
+        <p className="text-zinc-500 text-xs font-mono">
+          Token #{tokenId} · {contract.slice(0, 6)}...{contract.slice(-4)}
+        </p>
+
+        {currentBidEth !== null && (
+          <div className="bg-zinc-800 rounded-lg px-3 py-2 text-sm">
+            <span className="text-zinc-400">Oferta actual: </span>
+            <span className="text-white font-semibold">{currentBidEth.toFixed(4)} ETH</span>
+            {ethPriceMXN && (
+              <span className="text-zinc-500 ml-1">
+                (${(currentBidEth * ethPriceMXN).toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN)
+              </span>
+            )}
+          </div>
+        )}
+
+        {!hasBalance && (
+          <div className="bg-yellow-950 border border-yellow-700 rounded-lg px-3 py-2 text-xs text-yellow-300">
+            No tienes ETH en Sepolia.{' '}
+            <a
+              href="https://sepoliafaucet.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              Obtén ETH de prueba →
+            </a>
+          </div>
+        )}
+
+        <div>
+          <label className="text-zinc-400 text-xs block mb-1">
+            Tu puja en ETH (mínimo ~{minBid.toFixed(4)} ETH)
+          </label>
+          <input
+            type="number"
+            step="0.001"
+            min={minBid}
+            value={bidAmount}
+            onChange={(e) => setBidAmount(e.target.value)}
+            placeholder={`0.${minBid.toFixed(3).slice(2)}`}
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm placeholder:text-zinc-600 focus:outline-none focus:border-violet-500"
+          />
+          {bidMXN !== null && (
+            <p className="text-zinc-500 text-xs mt-1">
+              ≈ ${bidMXN.toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN
+            </p>
+          )}
+        </div>
+
+        {isSuccess ? (
+          <div className="bg-green-950 border border-green-700 rounded-lg px-3 py-2 text-green-400 text-sm text-center">
+            ¡Puja enviada correctamente!
+          </div>
+        ) : isError ? (
+          <div className="bg-red-950 border border-red-700 rounded-lg px-3 py-2 text-red-400 text-xs">
+            Error: {error?.message?.slice(0, 120)}
+          </div>
+        ) : null}
+
+        <button
+          onClick={handleBid}
+          disabled={isPending || !bidAmount || bidEth <= 0 || !hasBalance || isSuccess}
+          className="w-full py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium text-sm transition-colors"
+        >
+          {isPending ? 'Firmando...' : 'Confirmar puja con mi wallet'}
+        </button>
+      </div>
+    </div>
+  )
 }
 
 // ── Card de subasta propia ────────────────────────────────────────────────────
@@ -178,73 +320,98 @@ function MarketCard({
   item: MarketItem
   ethPriceMXN: number | null
 }) {
+  const [showBidModal, setShowBidModal] = useState(false)
   const bidEth = item.currentBid ? parseFloat(item.currentBid) / 1e18 : null
   const bidMXN = bidEth && ethPriceMXN ? bidEth * ethPriceMXN : null
 
   const imageUrl = ipfsToHttp(item.imageUrl)
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-colors">
-      <div className="aspect-square bg-zinc-800 relative">
-        {imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={imageUrl} alt={item.name ?? 'NFT'} className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-zinc-600 text-4xl">🎨</span>
-          </div>
-        )}
-      </div>
-      <div className="p-4 space-y-2">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="text-white font-medium truncate text-sm">
-            {item.name ?? `Token #${item.tokenId}`}
-          </h3>
-          <span className="shrink-0 text-xs text-zinc-500 border border-zinc-700 rounded-full px-2 py-0.5">
-            Mercado de referencia
-          </span>
+    <>
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-colors">
+        <div className="aspect-square bg-zinc-800 relative">
+          {imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={imageUrl} alt={item.name ?? 'NFT'} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <span className="text-zinc-600 text-4xl">🎨</span>
+            </div>
+          )}
         </div>
-
-        {bidMXN !== null ? (
-          <div>
-            <p className="text-zinc-500 text-xs">Oferta actual</p>
-            <p className="text-zinc-300 font-semibold text-sm">{bidEth?.toFixed(4)} ETH</p>
-            <p className="text-zinc-500 text-xs">
-              ${bidMXN.toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN
-            </p>
+        <div className="p-4 space-y-2">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-white font-medium truncate text-sm">
+              {item.name ?? `Token #${item.tokenId}`}
+            </h3>
+            <span className="shrink-0 text-xs text-zinc-500 border border-zinc-700 rounded-full px-2 py-0.5">
+              Mercado de referencia
+            </span>
           </div>
-        ) : (
-          <p className="text-zinc-600 text-xs">Sin ofertas</p>
-        )}
 
-        {item.endTime && (
-          <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-            <span>⏱</span>
-            <Countdown endTime={item.endTime} />
+          {bidMXN !== null ? (
+            <div>
+              <p className="text-zinc-500 text-xs">Oferta actual</p>
+              <p className="text-zinc-300 font-semibold text-sm">{bidEth?.toFixed(4)} ETH</p>
+              <p className="text-zinc-500 text-xs">
+                ${bidMXN.toLocaleString('es-MX', { maximumFractionDigits: 0 })} MXN
+              </p>
+            </div>
+          ) : (
+            <p className="text-zinc-600 text-xs">Sin ofertas</p>
+          )}
+
+          {item.endTime && (
+            <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+              <span>⏱</span>
+              <Countdown endTime={item.endTime} />
+            </div>
+          )}
+
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={() => setShowBidModal(true)}
+              className="flex-1 text-center text-xs text-white bg-violet-600 hover:bg-violet-500 rounded-lg py-1.5 font-medium transition-colors"
+            >
+              Pujar →
+            </button>
+            <a
+              href={`https://superrare.com/${item.contract}/${item.tokenId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 block text-center text-xs text-zinc-500 hover:text-zinc-300 border border-zinc-700 hover:border-zinc-600 rounded-lg py-1.5 transition-colors"
+            >
+              Ver en Rare →
+            </a>
           </div>
-        )}
-
-        <a
-          href={`https://superrare.com/${item.contract}/${item.tokenId}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full text-center text-xs text-zinc-500 hover:text-zinc-300 border border-zinc-700 hover:border-zinc-600 rounded-lg py-1.5 transition-colors mt-2"
-        >
-          Ver en Rare →
-        </a>
+        </div>
       </div>
-    </div>
+
+      {showBidModal && (
+        <BidModal
+          contract={item.contract}
+          tokenId={item.tokenId}
+          currentBidEth={bidEth}
+          ethPriceMXN={ethPriceMXN}
+          onClose={() => setShowBidModal(false)}
+        />
+      )}
+    </>
   )
 }
 
-// ── Página principal ─────────────────────────────────────────────────────────
+// ── Página principal ──────────────────────────────────────────────────────────
 
 export default function DashboardPage() {
   const { ready, authenticated, user } = usePrivy()
-  // Key aislada por wallet — igual que en chat/page.tsx
   const address = user?.wallet?.address ?? null
   const storageKey = address ? `nexus_session_${address.toLowerCase()}` : null
   const [mySession, setMySession] = useState<StoredSession | null>(null)
+  const [newBidNotification, setNewBidNotification] = useState<{
+    tokenId: number
+    bidAmount: string
+    bidAmountMXN: number
+  } | null>(null)
 
   // Leer la sesión solo de la wallet conectada
   useEffect(() => {
@@ -260,15 +427,6 @@ export default function DashboardPage() {
     } catch {}
   }, [storageKey])
 
-  // Mercado global de Rare Protocol
-  const { data: marketData, isLoading: loadingMarket } = useQuery({
-    queryKey: ['market'],
-    queryFn: () =>
-      fetch('/api/rare?command=search_auctions').then((r) => r.json()),
-    refetchInterval: 60_000,
-    enabled: authenticated,
-  })
-
   // Precio ETH/MXN
   const { data: ticker } = useQuery({
     queryKey: ['ticker', 'eth_mxn'],
@@ -278,8 +436,79 @@ export default function DashboardPage() {
   })
 
   const ethPriceMXN = ticker?.last ? parseFloat(ticker.last) : null
+
+  // Mercado global de Rare Protocol
+  const { data: marketData, isLoading: loadingMarket } = useQuery({
+    queryKey: ['market'],
+    queryFn: () =>
+      fetch('/api/rare?command=search_auctions').then((r) => r.json()),
+    refetchInterval: 60_000,
+    enabled: authenticated,
+  })
+
   const marketItems: MarketItem[] =
     marketData?.data?.items ?? marketData?.data?.data?.items ?? []
+
+  // Persistir sesión actualizada en localStorage
+  const saveSession = useCallback(
+    (updated: StoredSession) => {
+      if (!storageKey) return
+      setMySession(updated)
+      localStorage.setItem(storageKey, JSON.stringify(updated))
+    },
+    [storageKey]
+  )
+
+  // Polling de pujas en mis subastas
+  useEffect(() => {
+    if (!mySession?.activeAuctions?.length || !ethPriceMXN) return
+
+    const interval = setInterval(async () => {
+      for (const auction of mySession.activeAuctions) {
+        if (auction.settled) continue
+        try {
+          const res = await fetch(
+            `/api/rare?command=auction_status&contract=${auction.contract}&tokenId=${auction.tokenId}`
+          )
+          const data = await res.json()
+
+          const currentBid = data.data?.currentBid
+          if (
+            currentBid &&
+            currentBid !== '0' &&
+            currentBid !== auction.lastKnownBid
+          ) {
+            const mxnAmount = parseFloat(currentBid) * ethPriceMXN
+            setNewBidNotification({
+              tokenId: auction.tokenId,
+              bidAmount: currentBid,
+              bidAmountMXN: Math.round(mxnAmount),
+            })
+
+            // Actualiza lastKnownBid en sesión
+            const updated: StoredSession = {
+              ...mySession,
+              activeAuctions: mySession.activeAuctions.map((a) =>
+                a.tokenId === auction.tokenId && a.contract === auction.contract
+                  ? { ...a, lastKnownBid: currentBid }
+                  : a
+              ),
+            }
+            saveSession(updated)
+          }
+        } catch { /* silencioso */ }
+      }
+    }, 60_000)
+
+    return () => clearInterval(interval)
+  }, [mySession, ethPriceMXN, saveSession])
+
+  // Auto-cierre de notificación después de 10 segundos
+  useEffect(() => {
+    if (!newBidNotification) return
+    const t = setTimeout(() => setNewBidNotification(null), 10_000)
+    return () => clearTimeout(t)
+  }, [newBidNotification])
 
   const hasCollection = !!mySession?.collectionAddress
   const myAuctions = mySession?.activeAuctions ?? []
@@ -303,6 +532,33 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-zinc-950 pb-16">
+      {/* Banner de nueva puja */}
+      {newBidNotification && (
+        <div
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4 animate-in slide-in-from-top-4 duration-300"
+        >
+          <div className="bg-violet-900 border border-violet-600 rounded-xl p-4 shadow-xl">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-white font-semibold text-sm">
+                  🔔 ¡Nueva puja en Token #{newBidNotification.tokenId}!
+                </p>
+                <p className="text-violet-200 text-xs mt-0.5">
+                  Alguien ofreció {newBidNotification.bidAmount} ETH
+                  (~${newBidNotification.bidAmountMXN.toLocaleString('es-MX')} MXN)
+                </p>
+              </div>
+              <button
+                onClick={() => setNewBidNotification(null)}
+                className="text-violet-300 hover:text-white text-lg leading-none shrink-0"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-zinc-800 px-4 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
