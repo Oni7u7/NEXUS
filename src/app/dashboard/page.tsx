@@ -6,7 +6,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useWriteContract, useWaitForTransactionReceipt, useBalance, useAccount } from 'wagmi'
 import { parseEther, formatEther } from 'viem'
 import Link from 'next/link'
+import Image from 'next/image'
 import WalletButton from '@/app/_components/WalletButton'
+import Header from '@/app/_components/Header'
 import SPEIReceipt from '@/app/_components/SPEIReceipt'
 
 // ── Constantes ────────────────────────────────────────────────────────────────
@@ -247,7 +249,7 @@ function UserAuctionCard({
   }, [auction.metadataUri, imageUrl])
 
   return (
-    <div className={`bg-zinc-900 rounded-2xl overflow-hidden border ${auction.settled ? 'border-green-700/60' : 'border-violet-800/50'}`}>
+    <div className={`bg-zinc-900 rounded-2xl overflow-hidden border ${auction.settled ? 'border-green-700/60' : 'border border-violet-500/20'}`}>
       <div className="relative aspect-square bg-zinc-800 rounded-lg overflow-hidden">
         {imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -328,7 +330,7 @@ function MarketCard({
 
   return (
     <>
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-600 transition-colors">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition-colors">
         <div className="aspect-square bg-zinc-800 relative">
           {imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -559,32 +561,20 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-zinc-800 px-4 py-4">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/chat" className="text-xs text-zinc-400 hover:text-violet-400 transition-colors">
-              ← Chat
-            </Link>
-            <h1 className="text-white font-bold text-xl">Dashboard</h1>
-            {ethPriceMXN && (
-              <span className="text-xs text-zinc-500">
-                ETH{' '}
-                <span className="text-violet-400">
-                  ${ethPriceMXN.toLocaleString('es-MX')} MXN
-                </span>
-              </span>
-            )}
-          </div>
-          <WalletButton />
-        </div>
-      </div>
+      <Header />
 
       <div className="max-w-5xl mx-auto px-4 mt-8 space-y-12">
 
         {/* ── Sección 1: Mis subastas ──────────────────────────────────── */}
         <section>
-          <h2 className="text-white font-bold text-lg mb-4">Mis subastas</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-white font-bold text-lg">Mis subastas</h2>
+            {ethPriceMXN && (
+              <span className="text-xs text-zinc-500">
+                ETH <span className="text-violet-400 font-medium">${ethPriceMXN.toLocaleString('es-MX')} MXN</span>
+              </span>
+            )}
+          </div>
 
           {hasCollection ? (
             <>

@@ -1,11 +1,14 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { LineChart, Line, ResponsiveContainer, Tooltip as RechartTooltip } from 'recharts'
 import { usePrivy } from '@privy-io/react-auth'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
+import Image from 'next/image'
 import WalletButton from '@/app/_components/WalletButton'
 import SPEIReceipt from '@/app/_components/SPEIReceipt'
+import Header from '@/app/_components/Header'
 
 // ── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -78,15 +81,15 @@ function ChatMessage({ msg }: { msg: Message }) {
   return (
     <div className={`flex mb-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
-        <div className="w-7 h-7 rounded-full bg-violet-700 flex items-center justify-center text-xs font-bold text-white mr-2 shrink-0 mt-0.5">
-          N
+        <div className="w-16 h-16 rounded-full overflow-hidden mr-2 shrink-0 mt-0.5">
+          <Image src="/logo-nexus (2).png" alt="NEXUS" width={64} height={64} className="rounded-full" />
         </div>
       )}
       <div
         className={`max-w-[75%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
           isUser
             ? 'bg-violet-600 text-white rounded-tr-sm'
-            : 'bg-zinc-800 text-zinc-100 rounded-tl-sm'
+            : 'bg-zinc-800 text-zinc-100 rounded-tl-sm border-l-2 border-violet-500'
         }`}
       >
         {msg.content}
@@ -324,6 +327,18 @@ export default function ChatPage() {
   })
   const ethPriceMXN = ticker?.last ? parseFloat(ticker.last) : null
 
+  // Historial de precios para sparkline
+  const [priceHistory, setPriceHistory] = useState<{ t: number; p: number }[]>([])
+  useEffect(() => {
+    if (!ethPriceMXN) return
+    setPriceHistory((prev) => [...prev, { t: Date.now(), p: ethPriceMXN }].slice(-30))
+  }, [ethPriceMXN])
+
+  const priceChange =
+    priceHistory.length >= 2
+      ? ((priceHistory.at(-1)!.p - priceHistory[0].p) / priceHistory[0].p) * 100
+      : null
+
   // Auto-scroll al último mensaje
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -527,42 +542,68 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-950 relative">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-sm shrink-0">
+    <div className="flex flex-col h-screen bg-zinc-950">
+      <Header />
+
+      <div className="flex flex-col flex-1 min-h-0 relative">
+      {/* Sub-barra del chat */}
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800/60 bg-zinc-950/80 shrink-0 gap-3">
         <div className="flex items-center gap-3">
-          <span className="text-white font-bold text-lg">NEXUS</span>
+          {isLoading && (
+            <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse shrink-0" />
+          )}
           {ethPriceMXN && (
-            <span className="text-xs text-zinc-500">
-              ETH{' '}
-              <span className="text-violet-400 font-medium">
-                ${ethPriceMXN.toLocaleString('es-MX')} MXN
-              </span>
-            </span>
+            <div className="flex items-center gap-2.5 bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5">
+              {/* Texto */}
+              <div className="flex flex-col leading-none">
+                <span className="text-[10px] text-zinc-600 uppercase tracking-wider font-medium">ETH / MXN</span>
+                <span className="text-sm font-bold text-violet-400 tabular-nums mt-0.5">
+                  ${ethPriceMXN.toLocaleString('es-MX')}
+                </span>
+                {priceChange !== null && (
+                  <span className={`text-[10px] font-semibold mt-0.5 ${priceChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {priceChange >= 0 ? '▲' : '▼'} {Math.abs(priceChange).toFixed(2)}%
+                  </span>
+                )}
+              </div>
+              {/* Sparkline */}
+              {priceHistory.length >= 2 && (
+                <div className="w-20 h-9 shrink-0">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={priceHistory} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+                      <RechartTooltip
+                        contentStyle={{ background: '#18181b', border: '1px solid #3f3f46', borderRadius: 6, padding: '2px 6px' }}
+                        itemStyle={{ color: '#a78bfa', fontSize: 10 }}
+                        formatter={(v: number) => [`$${v.toLocaleString('es-MX')}`, 'ETH']}
+                        labelFormatter={() => ''}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="p"
+                        stroke={priceChange !== null && priceChange < 0 ? '#f87171' : '#a78bfa'}
+                        strokeWidth={1.5}
+                        dot={false}
+                        isAnimationActive={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
+            </div>
           )}
         </div>
-        <div className="flex items-center gap-3">
-          {messages.length > 1 && (
-            <button
-              onClick={handleNewConversation}
-              className="text-xs text-zinc-500 hover:text-red-400 transition-colors"
-              title="Nueva conversación"
-            >
-              🗑️ Nueva conversación
-            </button>
-          )}
-          <Link
-            href="/dashboard"
-            className="text-xs text-zinc-400 hover:text-violet-400 transition-colors"
+        {messages.length > 1 && (
+          <button
+            onClick={handleNewConversation}
+            className="text-xs text-zinc-500 hover:text-red-400 transition-colors shrink-0"
           >
-            Dashboard →
-          </Link>
-          <WalletButton />
-        </div>
+            🗑️ Nueva conversación
+          </button>
+        )}
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-4">
+      <div className="flex-1 overflow-y-auto px-4 py-4 bg-gradient-to-b from-zinc-950 to-zinc-900">
         {messages.map((msg) => (
           <ChatMessage key={msg.id} msg={msg} />
         ))}
@@ -685,7 +726,7 @@ export default function ChatPage() {
       )}
 
       {/* Input bar */}
-      <div className="shrink-0 border-t border-zinc-800 bg-zinc-900">
+      <div className="shrink-0 border-t border-zinc-800 backdrop-blur-sm bg-zinc-900/80">
         <div className="flex items-end gap-2 px-3 py-2 max-w-3xl mx-auto">
           <ImageUploadButton onUpload={handleImageUpload} disabled={isLoading} />
 
@@ -723,6 +764,7 @@ export default function ChatPage() {
           <WalletButton />
         </div>
       )}
+      </div>
     </div>
   )
 }
