@@ -744,7 +744,7 @@ export default function Home() {
         </section>
 
 
-        {/* ── FOOTER ──────────────────────────────────────────────────────── */}
+        {/* ── FOOTER agregacion de extras ──────────────────────────────────────────────────────── */}
         <footer className="border-t border-zinc-800 bg-zinc-950 py-12 px-6">
           <div className="mx-auto max-w-5xl">
             <div className="flex flex-col md:flex-row items-start justify-between gap-10 mb-10">
