@@ -330,7 +330,7 @@ export default function AdminPage() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
                     <XAxis dataKey="venta" tick={{ fill: '#71717a', fontSize: 11 }} axisLine={false} tickLine={false} />
                     <YAxis tick={{ fill: '#71717a', fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => [`$${v.toLocaleString('es-MX')}`, '']} />
+                    <Tooltip contentStyle={tooltipStyle} formatter={(v) => [`$${Number(v).toLocaleString('es-MX')}`, '']} />
                     <Legend wrapperStyle={{ fontSize: 11, color: '#a1a1aa' }} />
                     <Bar dataKey="pago" name="Pago al creador" fill="url(#barPago)" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="fee"  name="Fee protocolo"   fill="url(#barFee)"  radius={[4, 4, 0, 0]} />
