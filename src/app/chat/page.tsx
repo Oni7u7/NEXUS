@@ -574,7 +574,7 @@ export default function ChatPage() {
                       <RechartTooltip
                         contentStyle={{ background: '#18181b', border: '1px solid #3f3f46', borderRadius: 6, padding: '2px 6px' }}
                         itemStyle={{ color: '#a78bfa', fontSize: 10 }}
-                        formatter={(v: number) => [`$${v.toLocaleString('es-MX')}`, 'ETH']}
+                        formatter={(v) => [`$${Number(v).toLocaleString('es-MX')}`, 'ETH']}
                         labelFormatter={() => ''}
                       />
                       <Line
