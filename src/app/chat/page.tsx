@@ -569,7 +569,7 @@ export default function ChatPage() {
               </div>
               {/* Sparkline */}
               {priceHistory.length >= 2 && (
-                <div className="w-20 h-9 shrink-0">
+                <div className="hidden sm:block w-20 h-9 shrink-0">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={priceHistory} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
                       <RechartTooltip
@@ -598,7 +598,7 @@ export default function ChatPage() {
             onClick={handleNewConversation}
             className="text-xs text-calypso-400 hover:text-red-400 transition-colors shrink-0"
           >
-            🗑️ Nueva conversación
+            🗑️<span className="hidden sm:inline"> Nueva conversación</span>
           </button>
         )}
       </div>

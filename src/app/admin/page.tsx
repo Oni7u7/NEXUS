@@ -292,25 +292,25 @@ export default function AdminPage() {
     <div className="min-h-screen bg-calypso-950 text-white">
 
       {/* ── HEADER ──────────────────────────────────────────────────────────── */}
-      <header className="flex items-center justify-between px-8 py-5 border-b border-calypso-500/20 bg-calypso-950/80 backdrop-blur sticky top-0 z-10">
-        <div className="flex items-center gap-3">
-          <Image src="/logo-nexus (2).png" alt="NEXUS" width={40} height={40} className="rounded-full ring-2 ring-calypso-500/40" />
-          <div>
-            <h1 className="text-white font-bold text-xl leading-none">Admin Panel</h1>
-            <p className="text-calypso-400 text-xs font-mono mt-0.5">Owner: {shortAddress}</p>
+      <header className="flex items-center justify-between px-4 sm:px-8 py-4 sm:py-5 border-b border-calypso-500/20 bg-calypso-950/80 backdrop-blur sticky top-0 z-10">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <Image src="/logo-nexus (2).png" alt="NEXUS" width={36} height={36} className="rounded-full ring-2 ring-calypso-500/40 shrink-0" />
+          <div className="min-w-0">
+            <h1 className="text-white font-bold text-base sm:text-xl leading-none">Admin Panel</h1>
+            <p className="text-calypso-400 text-xs font-mono mt-0.5 truncate">Owner: {shortAddress}</p>
           </div>
           {stats?.contractMode === 'demo' && (
-            <span className="ml-3 text-xs px-2.5 py-1 rounded-full border border-yellow-700 bg-yellow-950 text-yellow-400 font-medium">
+            <span className="hidden sm:inline ml-2 text-xs px-2.5 py-1 rounded-full border border-yellow-700 bg-yellow-950 text-yellow-400 font-medium">
               Demo mode
             </span>
           )}
         </div>
-        <nav className="flex items-center gap-5">
-          <Link href="/" className="text-calypso-400 hover:text-calypso-300 text-sm transition">
-            ← Inicio
+        <nav className="flex items-center gap-3 sm:gap-5 shrink-0">
+          <Link href="/" className="text-calypso-400 hover:text-calypso-300 text-xs sm:text-sm transition">
+            ← <span className="hidden sm:inline">Inicio</span>
           </Link>
-          <Link href="/dashboard" className="text-calypso-400 hover:text-calypso-300 text-sm transition">
-            Dashboard →
+          <Link href="/dashboard" className="text-calypso-400 hover:text-calypso-300 text-xs sm:text-sm transition">
+            <span className="hidden sm:inline">Dashboard</span> →
           </Link>
         </nav>
       </header>
@@ -443,7 +443,7 @@ export default function AdminPage() {
 
           {/* Bitso Business — 1/3 */}
           <div>
-            <div className="rounded-xl border border-calypso-800 bg-calypso-900/50 p-6 space-y-4 sticky top-28">
+            <div className="rounded-xl border border-calypso-800 bg-calypso-900/50 p-6 space-y-4 lg:sticky lg:top-28">
               <h3 className="text-white font-semibold">Saldo Bitso Business</h3>
 
               {loadingStats ? (
@@ -555,7 +555,7 @@ export default function AdminPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-sm min-w-[640px]">
                 <thead>
                   <tr className="border-b border-calypso-800 text-calypso-400 text-xs uppercase tracking-wide">
                     <th className="px-5 py-3 text-left font-medium">Tx</th>

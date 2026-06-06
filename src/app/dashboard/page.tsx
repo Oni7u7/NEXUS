@@ -579,7 +579,7 @@ export default function DashboardPage() {
           {hasCollection ? (
             <>
               {/* Resumen de colección */}
-              <div className="bg-calypso-900 border border-calypso-700/50 rounded-2xl p-4 mb-4 flex items-center justify-between">
+              <div className="bg-calypso-900 border border-calypso-700/50 rounded-2xl p-4 mb-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4">
                 <div>
                   <p className="text-calypso-400 text-xs">Colección</p>
                   <p className="text-white font-semibold">

@@ -23,26 +23,26 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-calypso-800 bg-calypso-950/80 backdrop-blur-sm">
-      <div className="mx-auto max-w-7xl px-6 py-2 flex items-center justify-between gap-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-2 flex items-center justify-between gap-3 sm:gap-6">
         <Link href="/" className="shrink-0 flex items-center gap-2">
           <Image
             src="/Nexus-words.png"
             alt="NEXUS"
             width={100}
             height={26}
-            className="h-8 w-auto object-contain"
+            className="h-7 sm:h-8 w-auto object-contain"
           />
         </Link>
 
         <nav aria-label="Main navigation">
-          <ul className="flex items-center gap-6">
+          <ul className="flex items-center gap-3 sm:gap-6">
             {navLinks.map(({ href, label }) => {
               const active = pathname === href
               return (
                 <li key={href}>
                   <Link
                     href={href}
-                    className={`relative text-sm transition-colors pb-1 ${
+                    className={`relative text-xs sm:text-sm transition-colors pb-1 ${
                       active ? 'text-white font-medium' : 'text-calypso-300 hover:text-white'
                     }`}
                   >
@@ -61,7 +61,7 @@ export default function Header() {
                   return (
                     <Link
                       href="/admin"
-                      className={`relative text-sm transition-colors pb-1 ${
+                      className={`relative text-xs sm:text-sm transition-colors pb-1 ${
                         active ? 'text-white font-medium' : 'text-calypso-300 hover:text-white'
                       }`}
                     >
